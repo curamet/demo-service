@@ -1,3 +1,8 @@
 variable "prefix" {
-    type = string
+  type = string
+}
+
+variable "secret_file_path" {
+  type    = string
+  default = "../secret.txt" # Optional default value
 }

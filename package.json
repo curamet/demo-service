@@ -7,6 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier \"src/**/**.ts\" --write",
     "start": "npx ts-node index.ts",
+    "build": "tsc",
     "postinstall": "tsc -p ."
   },
   "keywords": [],

@@ -75,3 +75,7 @@ fabric.properties
 /node_modules
 .npmrc
 /build
+
+# Secret keys are stored in this file
+.env
+secret.txt

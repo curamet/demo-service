@@ -61,31 +61,91 @@ After making the necessary changes, to deploy the service and infrastructure, fo
 1. Change the **prefix** in the **terraform.tfvars** file to something unique to you. This is a one-time change when you first get started.
 2. If the service code in /src is changed, update the version number in both the **terraform.tfvars** file and **package.json** to reflect the new version. -- if not changed the run service will not be redeployed.
 
-3. Connect to the Google Cloud project by running the following commands -- 3 & 4 are optional if you have already authenticated:
-    ```sh
-     gcloud auth application-default login --project=curamet-onboarding
-     gcloud config set project curamet-onboarding
-     gcloud auth login
-    ```
-4. Authenticate with the artifact registry:
-    ```sh
-    gcloud auth configure-docker "europe-docker.pkg.dev"
-    ```
-   
-5. Initialize Terraform -- from this point on, navigate to the **terraform** directory: 
-    ```sh
-    terraform init --backend-config="environments/dev/backend.conf"
-    ```
+3. ✅ Connect to the Google Cloud Project
 
-6. Plan the Terraform configuration to make sure all looks good:
-    ```sh
-   terraform plan -var-file="environments/dev/terraform.tfvars" -no-color
-    ```
-   
-7. Apply the Terraform configuration:
-    ```sh
-    terraform apply -var-file="environments/dev/terraform.tfvars" -no-color
-    ```
+> 🧠 Skip this if you're already authenticated and configured.
+
+```sh
+gcloud auth application-default login --project=curamet-onboarding
+gcloud config set project curamet-onboarding
+gcloud auth login
+```
+
+---
+
+## 2. ✅ Authenticate Docker for Google Artifact Registry
+
+```sh
+gcloud auth configure-docker europe-docker.pkg.dev
+```
+
+> This enables Docker to push to `europe-docker.pkg.dev`.
+
+---
+
+## 3. ✅ (First-time Only) Ensure Artifact Registry Repo Exists
+
+> Skip if already created.
+
+```sh
+gcloud artifacts repositories create am-curamet-repo \
+  --repository-format=docker \
+  --location=europe \
+  --description="Docker repo for Cloud Run"
+```
+
+---
+
+## 4. ✅ Initialize Terraform
+
+> From the root `terraform/` directory:
+
+```sh
+terraform init --backend-config="environments/dev/backend.conf"
+```
+
+---
+
+## 5. 🐳 Build & Push Docker Image to Artifact Registry
+
+```sh
+export IMAGE_VERSION=0.0.8
+
+docker buildx build \
+  --platform linux/amd64 \
+  -t europe-docker.pkg.dev/curamet-onboarding/am-curamet-repo/am-demo-service:$IMAGE_VERSION \
+  . \
+  --push
+```
+
+🔍 What this does:
+- Builds for `linux/amd64` (required by Cloud Run)
+- Tags with version (change `IMAGE_VERSION` as needed)
+- Pushes the image to Google Artifact Registry
+
+---
+
+## 6. 📦 Terraform Plan
+
+> Double-check changes before applying:
+
+```sh
+terraform plan -var-file="environments/dev/terraform.tfvars" -no-color
+```
+
+---
+
+## 7. 🚀 Apply Terraform Configuration
+
+```sh
+terraform apply -var-file="environments/dev/terraform.tfvars" -no-color
+```
+
+This deploys the container to Cloud Run and configures your infrastructure as code.
+
+---
+
+✅ Done! Your service will be deployed and accessible via the URL output from Terraform.
 
 
 
@@ -112,15 +172,15 @@ This is a high level overview of the resources created by Terraform after a succ
 
 ## Suggested Next Steps
 
-- [ ] Set up a CI/CD pipeline with Cloud Build.
-- [ ] Set up a CI/CD pipeline  with GitHub Actions.
-- [ ] Implement pull subscription.
-- [ ] Showcase a scenario where the push trigger fails 5 times and is sent to a dead-letter topic.
+- [/] Set up a CI/CD pipeline with Cloud Build.
+- [/] Set up a CI/CD pipeline  with GitHub Actions.
+- [/] Implement pull subscription.
+- [/] Showcase a scenario where the push trigger fails 5 times and is sent to a dead-letter topic.
 - [ ] Improve the way versioning is managed (currently, the version has to be manually updated in the **terraform.tfvars** file).
-- [ ] Add lifecycle rules to the storage bucket.
-- [ ] Restrict the service account (demo service runner) to access only the specified secret rather than all secrets.
+- [/] Add lifecycle rules to the storage bucket.
+- [/] Restrict the service account (demo service runner) to access only the specified secret rather than all secrets.
 - [ ] Create a Cloud Scheduler job with Terraform to trigger an existing or a new endpoint. 
-- [ ] Use an alternative way to retrieve the secret from Secret Manager (instead of using the Secret Manager client library).
+- [/] Use an alternative way to retrieve the secret from Secret Manager (instead of using the Secret Manager client library).
 - [ ] Setup a vpc network for the cloud run service to improve security.
 - [ ] Enable Cloud Run invocations from only specific IP addresses.
 - [ ] Anything worth exploring or trying. 

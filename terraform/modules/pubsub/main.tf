@@ -51,7 +51,7 @@ resource "google_pubsub_subscription" "subscription_trigger_demo_service" {
   }
 
   retry_policy {
-    maximum_backoff = "10s"
+    maximum_backoff = "30s"
     minimum_backoff = "5s"
   }
 
@@ -120,7 +120,7 @@ resource "google_pubsub_subscription" "subscription_object_notification" {
   }
 
   retry_policy {
-    maximum_backoff = "10s"
+    maximum_backoff = "30s"
     minimum_backoff = "5s"
   }
 
