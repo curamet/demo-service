@@ -8,4 +8,8 @@ app.use(express.json({ limit: config.jsonBodyMaxSize }));
 app.use(generateRequestId); // generate a request id
 app.use(routes());
 
+app.get('/', (req, res) => {
+  res.send('Service is running!');
+});
+
 export default app;

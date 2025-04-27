@@ -1,0 +1,37 @@
+steps:
+  # Build the docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'build',
+        '-t',
+        'europe-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_ID}/${_PREFIX}-${_SERVICE_NAME}:${_VERSION}',
+        '.',
+      ]
+
+  # Push the image to artifact registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      [
+        'push',
+        'europe-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_ID}/${_PREFIX}-${_SERVICE_NAME}:${_VERSION}',
+      ]
+
+  # Deploy to cloud run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - '${_PREFIX}-${_SERVICE_NAME}'
+      - '--image'
+      - 'europe-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY_ID}/${_PREFIX}-${_SERVICE_NAME}:${_VERSION}'
+      - '--region'
+      - '${_REGION}'
+
+substitutions:
+  _REGION: europe-west1
+  _REPOSITORY_ID: curamet-repo
+  _SERVICE_NAME: demo-service
+  _PREFIX: nr
+  _VERSION: 0.0.3

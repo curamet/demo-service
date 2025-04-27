@@ -1,0 +1,33 @@
+name: Destroy Cloud Run Service
+
+on:
+  workflow_dispatch: 
+
+env:
+  PROJECT_ID: curamet-onboarding
+  REGION: europe-west1
+  SERVICE_NAME: demo-service
+  PREFIX: nr
+
+jobs:
+  destroy:
+    name: Destroy Cloud Run Service
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Google Auth
+        id: auth
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: '${{ secrets.GCP_SA_KEY }}'
+
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+
+      - name: Delete Cloud Run Service
+        run: |
+          gcloud run services delete $PREFIX-$SERVICE_NAME --region $REGION --platform managed --quiet
+
+      - name: Delete Storage Bucket
+        run: |
+          gsutil -m rm -r gs://$PREFIX-curamet-bucket || true

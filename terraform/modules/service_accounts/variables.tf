@@ -7,7 +7,5 @@ variable "region" {
 }
 
 variable "prefix" {
-    type = string
-}
-
-
+  type = string
+} 

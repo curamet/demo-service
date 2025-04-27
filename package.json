@@ -1,12 +1,12 @@
 {
   "name": "demo-service",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "",
   "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier \"src/**/**.ts\" --write",
-    "start": "npx ts-node index.ts",
+    "start": "ts-node src/index.ts",
     "postinstall": "tsc -p ."
   },
   "keywords": [],

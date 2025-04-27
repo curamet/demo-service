@@ -28,6 +28,7 @@ variable "prefix" {
 
 variable "run_version" {
     type = string
+    default = null 
 }
 
 variable "run_service_name" {

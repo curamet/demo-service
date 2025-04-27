@@ -18,6 +18,10 @@ resource "google_pubsub_subscription" "dead_lettering_subscription" {
   name  = "${var.prefix}-dead-lettering-subscription"
   topic = google_pubsub_topic.dead_letter_topic.id
   depends_on = [google_pubsub_topic.dead_letter_topic]
+  
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
 ##############################################
 
@@ -27,6 +31,10 @@ resource "google_pubsub_subscription" "dead_lettering_subscription" {
 resource "google_pubsub_topic" "demo_topic" {
   name = "${var.prefix}-demo-topic"
   depends_on = [google_pubsub_topic.dead_letter_topic]
+  
+  lifecycle {
+    ignore_changes = [name]
+  }
 }
 
 resource "google_pubsub_subscription" "subscription_trigger_demo_service" {
@@ -139,6 +147,22 @@ resource "google_pubsub_subscription_iam_member" "dead_lettering_subscriber_on_p
   depends_on = [google_pubsub_subscription.subscription_object_notification]
 }
 ##############################################
+
+resource "google_pubsub_subscription" "pull_subscription_demo_service" {
+  name  = "${var.prefix}-pull-subscription-demo-service"
+  topic = google_pubsub_topic.demo_topic.name
+
+  ack_deadline_seconds = 600
+
+  expiration_policy {
+    ttl = ""
+  }
+
+  message_retention_duration = "604800s" # 7 days
+  enable_message_ordering    = true
+
+  depends_on = [google_pubsub_topic.demo_topic]
+}
 
 
 

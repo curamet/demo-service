@@ -27,7 +27,7 @@ The project is designed to be straightforward, demonstrating how to deploy a ser
 
 
 **IMPORTANT NOTE:** When you are done, please run the following command to destroy all the created resources and avoid any extra charges:
-``` terraform destroy -var-file="environments/dev/terraform.tfvars" -no-color```
+``` terraform destroy -var-file="environments/dev/terraform.tfvars" -no-color -auto-approve```
 
 
 ## Terraform

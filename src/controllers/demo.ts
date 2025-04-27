@@ -1,15 +1,15 @@
+/// <reference path="../types/custom.d.ts" />
 import express from 'express';
 import logger from '../utils/logger';
 import { castToObject } from '../utils/errors';
 import { FAILURE, SUCCESS } from '../utils/constants';
 import { failure, success } from '../utils/apiResponse';
-import {getSecret} from "../utils/secret";
-import config from "../config";
-import {uploadFileToBucket} from "../utils/gcs";
-import {generateRandomString} from "../utils/helpers";
+import { getSecret } from '../utils/secret';
+import config from '../config';
+import { uploadFileToBucket } from '../utils/gcs';
+import { generateRandomString } from '../utils/helpers';
 import * as fs from 'fs';
 import * as path from 'path';
-
 
 /**
  * endpoint triggered by a pubsub push subscription
@@ -22,11 +22,11 @@ export const pushTrigger = async (req: express.Request, res: express.Response) =
     const metadata = { requestId: requestId };
     logger.info('push subscription has triggered me', metadata);
 
-    logger.info('data from pub/sub', {...metadata,data: req.body.data});
+    logger.info('data from pub/sub', { ...metadata, data: req.body.data });
 
+    logger.info('secret value: ' + (await getSecret(config.secretName)), metadata);
 
-    logger.info("secret value: " + await getSecret(config.secretName), metadata);
-
+    return res.status(500).send({ error: 'Simulated failure for dead-letter test' });
 
     // Generate a random file name and random content
     const randomFileName = `${generateRandomString(6)}.txt`;
@@ -36,7 +36,6 @@ export const pushTrigger = async (req: express.Request, res: express.Response) =
     const filePath = path.join(__dirname, randomFileName);
     fs.writeFileSync(filePath, randomContent);
     logger.info(`file created at ${filePath}`, metadata);
-
 
     await uploadFileToBucket(filePath, config.bucketName, randomFileName, requestId);
 
@@ -50,8 +49,6 @@ export const pushTrigger = async (req: express.Request, res: express.Response) =
   }
 };
 
-
-
 /**
  * endpoint triggered when a file is uploaded to the bucket
  * @param req
@@ -63,8 +60,7 @@ export const objectNotification = async (req: express.Request, res: express.Resp
     const metadata = { requestId: requestId };
     logger.info('object notification triggered me', metadata);
 
-    logger.info('file information:', {...metadata,data: req.body.data});
-
+    logger.info('file information:', { ...metadata, data: req.body.data });
 
     // do something with the file information
 
@@ -75,4 +71,3 @@ export const objectNotification = async (req: express.Request, res: express.Resp
     return res.status(500).send(failure(FAILURE, metadata, 500));
   }
 };
-
