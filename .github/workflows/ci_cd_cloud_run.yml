@@ -160,51 +160,75 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Authenticate to Google Cloud
+      # 1. Authenticate again (fresh runner)
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      # Set up Google Cloud SDK
+      # 2. Set up gcloud CLI
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: curamet-onboarding
 
-      # Get Cloud Run service URL
-      - name: Get Cloud Run Service URL
-        id: get-url
-        run: |
-          SERVICE_URL=$(gcloud run services describe am-demo-service \
-            --region europe-west1 \
-            --project curamet-onboarding \
-            --format='value(status.url)')
-          echo "service_url=$SERVICE_URL" >> $GITHUB_OUTPUT
-          echo "🌐 Cloud Run URL: $SERVICE_URL"
-
-      # Run basic health check
-      - name: Health Check Test
-        run: |
-          echo "🔍 Testing service health endpoint..."
-          curl -f "${{ steps.get-url.outputs.service_url }}/health" \
-            || (echo "❌ Health check failed!" && exit 1)
-          echo "✅ Service is healthy!"
-
-      # Optional: Trigger Pub/Sub test endpoint
-      - name: Trigger Pub/Sub Event (Optional)
+      # 3. Allow public access to the Cloud Run service (optional safety)
+      - name: Allow Public Access to Cloud Run
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
         run: |
-          echo "🚀 Triggering Pub/Sub endpoint..."
-          curl -X POST "${{ steps.get-url.outputs.service_url }}/push-trigger" \
+          gcloud run services add-iam-policy-binding am-demo-service \
+            --member="allUsers" \
+            --role="roles/run.invoker" \
+            --region="europe-west1" \
+            --project="curamet-onboarding"
+
+      # 4. Trigger Pub/Sub event simulation
+      - name: Trigger Pub/Sub Event for Cloud Run Test
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+        run: |
+          echo "📡 Sending Pub/Sub test event..."
+          curl -X POST "https://am-demo-service-696820564091.europe-west1.run.app/push-trigger" \
             -H "Authorization: bearer $(gcloud auth print-identity-token)" \
             -H "Content-Type: application/json" \
             -d '{
                   "message": {
                     "data": "eyJuYW1lIjogIkRldmVsb3BlciJ9=",
-                    "attributes": {"event": "test"}
-                  }
-                }' \
-            && echo "✅ Pub/Sub endpoint test passed!"
+                    "attributes": {
+                      "event": "test"
+                    }
+                  },
+                  "subscription": "projects/curamet-onboarding/subscriptions/am-subscription-trigger-demo-service"
+                }'
+
+      # 5. Trigger Object Notification simulation
+      - name: Trigger Object Notification Event
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+        run: |
+          echo "📡 Sending Storage notification event..."
+          curl -X POST "https://am-demo-service-696820564091.europe-west1.run.app/object-notification" \
+            -H "Authorization: bearer $(gcloud auth print-identity-token)" \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "message": {
+                    "data": "eyJidWNrZXQiOiAiYW0tY3VyYW1ldC1idWNrZXQiLCAibmFtZSI6ICJzYW1wbGUtZmlsZS50eHQiLCAibWV0YWdlbmVyYXRpb24iOiAiMSIsICJ0aW1lQ3JlYXRlZCI6ICIyMDI1LTExLTA0VDEwOjAwOjAwLjAwMEoiLCAidXBkYXRlZCI6ICIyMDI1LTExLTA0VDEwOjAwOjAwLjAwMEoifQ==",
+                    "attributes": {
+                      "event": "test"
+                    }
+                  },
+                  "subscription": "projects/curamet-onboarding/subscriptions/am-subscription-trigger-demo-service"
+                }'
+
+      # 6. Verify Cloud Run service (optional)
+      - name: Verify Cloud Run Service
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+        run: |
+          echo "🔎 Checking Cloud Run Service status..."
+          gcloud run services describe am-demo-service \
+            --region europe-west1 \
+            --project curamet-onboarding \
+            --format="value(status.url)"
