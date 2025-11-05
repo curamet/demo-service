@@ -154,3 +154,57 @@ jobs:
             --project curamet-onboarding
 
           echo "✅ Deployment complete!"
+
+  test:
+    needs: deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      # Set up Google Cloud SDK
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: curamet-onboarding
+
+      # Get Cloud Run service URL
+      - name: Get Cloud Run Service URL
+        id: get-url
+        run: |
+          SERVICE_URL=$(gcloud run services describe am-demo-service \
+            --region europe-west1 \
+            --project curamet-onboarding \
+            --format='value(status.url)')
+          echo "service_url=$SERVICE_URL" >> $GITHUB_OUTPUT
+          echo "🌐 Cloud Run URL: $SERVICE_URL"
+
+      # Run basic health check
+      - name: Health Check Test
+        run: |
+          echo "🔍 Testing service health endpoint..."
+          curl -f "${{ steps.get-url.outputs.service_url }}/health" \
+            || (echo "❌ Health check failed!" && exit 1)
+          echo "✅ Service is healthy!"
+
+      # Optional: Trigger Pub/Sub test endpoint
+      - name: Trigger Pub/Sub Event (Optional)
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+        run: |
+          echo "🚀 Triggering Pub/Sub endpoint..."
+          curl -X POST "${{ steps.get-url.outputs.service_url }}/push-trigger" \
+            -H "Authorization: bearer $(gcloud auth print-identity-token)" \
+            -H "Content-Type: application/json" \
+            -d '{
+                  "message": {
+                    "data": "eyJuYW1lIjogIkRldmVsb3BlciJ9=",
+                    "attributes": {"event": "test"}
+                  }
+                }' \
+            && echo "✅ Pub/Sub endpoint test passed!"
