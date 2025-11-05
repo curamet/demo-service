@@ -12,17 +12,19 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # Authenticate to Google Cloud using service account credentials
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
+      # Install gcloud CLI and configure project
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: curamet-onboarding
-          export_default_credentials: true
 
+      # Configure Docker to authenticate to Artifact Registry
       - name: Configure Docker for Google Artifact Registry
         run: gcloud auth configure-docker europe-docker.pkg.dev --quiet
