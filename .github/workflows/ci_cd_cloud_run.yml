@@ -71,10 +71,8 @@ jobs:
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
         run: |
-          terraform apply \
-            -target=module.operations.google_artifact_registry_repository.curamet-repo \
-            -var-file="environments/dev/terraform.tfvars" \
-            -auto-approve -no-color
+          terraform apply -var-file="environments/dev/terraform.tfvars" -auto-approve -no-color
+
 
   docker_build_push:
     needs: terraform
