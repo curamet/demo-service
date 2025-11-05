@@ -1,0 +1,11 @@
+name: CI/CD for Cloud Run
+
+on:
+  push:
+    branches:
+      - majd-ci-cd
+
+jobs:
+  setup:
+    runs-on: ubuntu-latest
+    
