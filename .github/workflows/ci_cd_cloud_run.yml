@@ -117,3 +117,40 @@ jobs:
           docker buildx build --platform linux/amd64 \
             -t "$IMAGE_URL" \
             --push .
+
+  deploy:
+    needs: docker_build_push
+    runs-on: ubuntu-latest
+
+    steps:
+      # Authenticate to Google Cloud
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      # Set up Google Cloud SDK
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: curamet-onboarding
+
+      # Deploy to Cloud Run
+      - name: Deploy to Cloud Run
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+        run: |
+          SERVICE_NAME="am-demo-service"
+          REGION="europe-west1"
+          IMAGE_URL="europe-docker.pkg.dev/curamet-onboarding/am-curamet-repo/am-demo-service:0.0.3"
+
+          echo "🚀 Deploying $SERVICE_NAME to Cloud Run in $REGION"
+          gcloud run deploy "$SERVICE_NAME" \
+            --image "$IMAGE_URL" \
+            --region "$REGION" \
+            --platform managed \
+            --allow-unauthenticated \
+            --project curamet-onboarding
+
+          echo "✅ Deployment complete!"
