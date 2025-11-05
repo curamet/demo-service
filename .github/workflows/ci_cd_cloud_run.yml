@@ -233,6 +233,7 @@ jobs:
             --project curamet-onboarding \
             --format="value(status.url)"
 
+            
   destroy:
     needs: test
     runs-on: ubuntu-latest
