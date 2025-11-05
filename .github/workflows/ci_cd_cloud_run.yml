@@ -28,3 +28,49 @@ jobs:
       # Configure Docker to authenticate to Artifact Registry
       - name: Configure Docker for Google Artifact Registry
         run: gcloud auth configure-docker europe-docker.pkg.dev --quiet
+
+  terraform:
+    needs: setup
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout your repository (required to access your Terraform files)
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Authenticate again — each job gets a fresh runner
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS }}
+
+      # Set up gcloud CLI (optional, but useful for debugging)
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v2
+        with:
+          project_id: curamet-onboarding
+
+      # Set up Terraform
+      - name: Set up Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: 1.9.8
+
+      # Initialize Terraform
+      - name: Terraform Init
+        working-directory: terraform
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+        run: terraform init --backend-config="environments/dev/backend.conf"
+
+      # Apply Terraform for Artifact Registry
+      - name: Terraform Apply for Artifact Registry
+        working-directory: terraform
+        env:
+          GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
+        run: |
+          terraform apply \
+            -target=module.operations.google_artifact_registry_repository.curamet-repo \
+            -var-file="environments/dev/terraform.tfvars" \
+            -auto-approve -no-color
