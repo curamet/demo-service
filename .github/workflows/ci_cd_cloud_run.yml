@@ -38,6 +38,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+        
       # Authenticate again — each job gets a fresh runner
       - name: Authenticate to Google Cloud
         id: auth
