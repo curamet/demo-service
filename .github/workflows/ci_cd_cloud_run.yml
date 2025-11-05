@@ -234,45 +234,39 @@ jobs:
             --format="value(status.url)"
 
   destroy:
-    needs: check_resources
+    needs: test
     runs-on: ubuntu-latest
-
+    if: always() && github.ref == 'refs/heads/majd-ci-cd'
     steps:
-      # 1. Checkout the repo to access Terraform configuration
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. Authenticate to Google Cloud
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GCP_CREDENTIALS }}
 
-      # 3. Set up gcloud CLI
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
         with:
           project_id: curamet-onboarding
 
-      # 4. Set up Terraform
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.9.8
 
-      # 5. Initialize Terraform
       - name: Terraform Init
         working-directory: terraform
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
         run: terraform init --backend-config="environments/dev/backend.conf"
 
-      # 6. Destroy Terraform-managed resources
       - name: Terraform Destroy
         working-directory: terraform
         env:
           GOOGLE_APPLICATION_CREDENTIALS: ${{ steps.auth.outputs.credentials_file_path }}
         run: |
-          echo "⚠️ Starting Terraform destroy (this will remove all managed resources)"
+          echo "⚠️ Running Terraform destroy"
           terraform destroy -var-file="environments/dev/terraform.tfvars" -auto-approve -no-color
