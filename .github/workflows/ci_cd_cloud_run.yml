@@ -5,6 +5,7 @@ on:
     branches:
       - majd-ci-cd
 
+    
 jobs:
   setup:
     runs-on: ubuntu-latest
