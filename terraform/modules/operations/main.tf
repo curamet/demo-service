@@ -16,10 +16,10 @@ resource "google_project_service" "enabled_apis" {
 resource "google_artifact_registry_repository" "curamet-repo" {
   repository_id = "${var.prefix}-curamet-repo"
   description   = "example docker repository"
-  project        = var.project
-  location      = "europe"
+  project       = var.project
+  location      = var.region
   format        = "DOCKER"
-  depends_on = [google_project_service.enabled_apis]
+  depends_on    = [google_project_service.enabled_apis]
 }
 
 locals {

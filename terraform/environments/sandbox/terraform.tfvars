@@ -1,0 +1,8 @@
+prefix              = "sb"
+project             = "zeta-pivot-272421"
+project_number      = "536704833487"
+region              = "europe-west1"
+location            = "EU"
+envname             = "sandbox"
+run_version         = "0.0.1"
+run_service_name    = "demo-service-v2"

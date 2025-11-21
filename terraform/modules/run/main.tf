@@ -1,15 +1,15 @@
-resource "null_resource" "run_shell_script" {
-  provisioner "local-exec" {
-    command = "./push-docker-image.sh"
-    environment = {
-      IMAGE_URL  = local.image_url
-    }
-  }
+# resource "null_resource" "run_shell_script" {
+#  provisioner "local-exec" {
+#    command = "./push-docker-image.sh"
+#    environment = {
+#      IMAGE_URL  = local.image_url
+#    }
+#  }
 
-  triggers = {
-    version = var.run_version
-  }
-}
+#  triggers = {
+#    version = var.run_version
+#  }
+#}
 
 resource "google_cloud_run_v2_service" "run_service" {
   deletion_protection = false
@@ -17,7 +17,7 @@ resource "google_cloud_run_v2_service" "run_service" {
   location = var.region
   template {
       containers {
-        image = local.image_url
+        image = var.docker_image_url != "" ? var.docker_image_url : local.image_url
         env {
           name = "BUCKET_NAME"
           value = var.bucket_name
@@ -33,10 +33,10 @@ resource "google_cloud_run_v2_service" "run_service" {
       }
        service_account = var.service_account
   }
-  depends_on = [null_resource.run_shell_script]
+  # depends_on = [null_resource.run_shell_script]
 }
 
 
 locals {
-  image_url = "europe-docker.pkg.dev/${var.project}/${var.repository_id}/${var.prefix}-${var.run_service_name}:${var.run_version}"
+  image_url = "europe-west1-docker.pkg.dev/${var.project}/${var.repository_id}/${var.prefix}-${var.run_service_name}"
 }
