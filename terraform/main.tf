@@ -46,6 +46,7 @@ module "run" {
     service_account  = module.service_accounts.sa_demo_service_runner_email
     bucket_name      = module.storage.bucket_name
     secret_name      = module.secret_manager.secret_name
+    docker_image_url = var.docker_image_url 
     depends_on       = [module.service_accounts,module.storage, module.secret_manager, module.operations]
 }
 

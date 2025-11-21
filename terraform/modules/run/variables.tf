@@ -33,3 +33,7 @@ variable "run_service_name" {
 variable "service_account" {
     type = string
 }
+
+variable "docker_image_url" {
+  type = string
+}
