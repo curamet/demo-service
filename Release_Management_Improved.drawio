@@ -1,0 +1,267 @@
+<mxfile host="app.diagrams.net" agent="Claude" version="21.6.5">
+  <diagram name="Release Management and Tracking" id="rel-mgmt-improved">
+    <mxGraphModel dx="2000" dy="1400" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2420" pageHeight="1560" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="title" value="Release Management &amp; Tracking  -  Proposed Design" style="text;html=1;fontSize=26;fontStyle=1;align=left;fontColor=#1F3A68;" vertex="1" parent="1">
+          <mxGeometry x="40" y="20" width="1400" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="subtitle" value="Immutable product composition  ·  atomic site-branch deployment  ·  GitOps reconciliation  ·  release observability" style="text;html=1;fontSize=14;fontStyle=2;align=left;fontColor=#5A6470;" vertex="1" parent="1">
+          <mxGeometry x="40" y="60" width="1400" height="26" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lg1" value="unchanged" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1880" y="25" width="150" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="lg2" value="CHANGED" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;fontStyle=1;fontColor=#8A6D1F;" vertex="1" parent="1">
+          <mxGeometry x="2040" y="25" width="150" height="34" as="geometry" />
+        </mxCell>
+        <mxCell id="lg3" value="NEW" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E9F3EC;strokeColor=#2E7D4F;fontSize=11;fontStyle=1;fontColor=#2E7D4F;" vertex="1" parent="1">
+          <mxGeometry x="2200" y="25" width="150" height="34" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ LANE FRAMES ═══ -->
+        <mxCell id="L1" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C9D3DF;arcSize=1;" vertex="1" parent="1">
+          <mxGeometry x="40" y="130" width="450" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="H1" value="1.  APPLICATION RELEASE INPUTS" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3A68;strokeColor=#1F3A68;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="40" y="130" width="450" height="42" as="geometry" />
+        </mxCell>
+
+        <mxCell id="L2" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C9D3DF;arcSize=1;" vertex="1" parent="1">
+          <mxGeometry x="510" y="130" width="450" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="H2" value="2.  PRODUCT RELEASE CREATION" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3A68;strokeColor=#1F3A68;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="510" y="130" width="450" height="42" as="geometry" />
+        </mxCell>
+
+        <mxCell id="L3" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C9D3DF;arcSize=1;" vertex="1" parent="1">
+          <mxGeometry x="980" y="130" width="450" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="H3" value="3.  GIT RELEASE SOURCE OF TRUTH" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3A68;strokeColor=#1F3A68;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="980" y="130" width="450" height="42" as="geometry" />
+        </mxCell>
+
+        <mxCell id="L4" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C9D3DF;arcSize=1;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="130" width="450" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="H4" value="4.  SITE-SPECIFIC DEPLOYMENT" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3A68;strokeColor=#1F3A68;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1450" y="130" width="450" height="42" as="geometry" />
+        </mxCell>
+
+        <mxCell id="L5" value="" style="rounded=1;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#C9D3DF;arcSize=1;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="130" width="450" height="1250" as="geometry" />
+        </mxCell>
+        <mxCell id="H5" value="5.  GITOPS RUNTIME &amp; OBSERVABILITY" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1F3A68;strokeColor=#1F3A68;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1920" y="130" width="450" height="42" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ LANE 1 ═══ -->
+        <mxCell id="a1" value="Scenario definition&#10;&#10;Required application repository list&#10;e.g. Converto production scenario" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="200" width="410" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="a2" value="Bitbucket application repositories&#10;&#10;master commit carries:&#10;· movable release selector tag&#10;· immutable app version tag  e.g. v1.0.23&#10;· full Git commit SHA" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="310" width="410" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="a3" value="CHANGED  -  CI build and validation&#10;&#10;Jenkins / GitHub Actions&#10;build · test · scan · SBOM · SIGN · publish&#10;signing and SBOM added at build time" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="455" width="410" height="120" as="geometry" />
+        </mxCell>
+        <mxCell id="a4" value="CHANGED  -  Harbor registry&#10;&#10;Immutable application image&#10;tag = configured short SHA&#10;image digest captured  -  now MANDATORY&#10;signature and SBOM stored alongside" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=15;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="60" y="595" width="410" height="150" as="geometry" />
+        </mxCell>
+        <mxCell id="a5" value="Existing behaviour retained&#10;&#10;Application versions remain in app repositories. Images continue using short SHA tags. The release tag is used only when creating a product release." style="shape=note;whiteSpace=wrap;html=1;fillColor=#FAF7E8;strokeColor=#D6B656;size=18;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="765" width="410" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ LANE 2 ═══ -->
+        <mxCell id="b1" value="Deploy Tool: release create&#10;&#10;release create --scenario converto&#10;              --release 2026.09.1" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="200" width="410" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="b2" value="CHANGED  -  Resolve complete product composition&#10;&#10;For every app:&#10;1. Find commit selected by release tag&#10;2. Verify commit is on master&#10;3. Read one immutable version tag&#10;4. Derive short-SHA image tag&#10;5. Resolve image DIGEST  -  mandatory&#10;6. Record tag-to-SHA resolution timestamp" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="315" width="410" height="175" as="geometry" />
+        </mxCell>
+        <mxCell id="b3" value="CHANGED  -  Release validation&#10;&#10;All required apps present?&#10;Exactly one app version per commit?&#10;Images available in Harbor?&#10;Digest resolved for every image?&#10;Signature verifies?  Scan passed?  SBOM present?&#10;Product release ID unused?&#10;Manifest schema valid?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=10;" vertex="1" parent="1">
+          <mxGeometry x="530" y="510" width="410" height="230" as="geometry" />
+        </mxCell>
+        <mxCell id="b4" value="Fail without Git changes&#10;&#10;Report missing tag, missing digest, failed signature, duplicate version or invalid composition" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FBEAE7;strokeColor=#B85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="760" width="410" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="b5" value="CHANGED  -  Generate immutable release YAML&#10;&#10;schemaVersion&#10;Product release ID&#10;App version + Git SHA&#10;Image repository + tag + DIGEST&#10;Creation metadata, scenario, resolution time" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="880" width="410" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="b6" value="NEW  -  Composition diff and release notes&#10;&#10;Compare against the previous product release and generate a changelog automatically:&#10;which apps changed, from which version to which, and the commit range for each." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E9F3EC;strokeColor=#2E7D4F;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="530" y="1040" width="410" height="140" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ LANE 3 ═══ -->
+        <mxCell id="c1" value="deployed-state default branch&#10;Global, not environment-specific" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="200" width="410" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="c2" value="releases/converto-2026.09.1.yaml&#10;&#10;Immutable product composition:&#10;· base-data-service  v1.0.23 / 8c88563 / sha256:...&#10;· qda-interface  v2.4.0 / b4903b4 / sha256:...&#10;· all other scenario applications" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=15;whiteSpace=wrap;html=1;fillColor=#FAF7E8;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="295" width="410" height="165" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" value="Immutable Git tag&#10;converto-2026.09.1&#10;Points to the release-manifest commit" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=12;whiteSpace=wrap;html=1;fillColor=#FAF7E8;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="480" width="410" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" value="NEW  -  Release lifecycle state&#10;&#10;draft  →  validated  →  approved  →  in rollout  →  superseded&#10;&#10;State is tracked against the release, not the site. Answers &quot;which releases may be deployed today&quot; and lets an unsafe release be withdrawn without deleting history." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E9F3EC;strokeColor=#2E7D4F;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="605" width="410" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" value="Release approval gate&#10;&#10;Approve the exact immutable product composition&#10;Once per release, not per site" style="rhombus;whiteSpace=wrap;html=1;fillColor=#FAF7E8;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="785" width="410" height="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" value="Source-of-truth rule&#10;&#10;The release manifest answers &quot;what is Converto 2026.09.1&quot;. It is never edited after publication. Any composition change creates a new product release." style="shape=note;whiteSpace=wrap;html=1;fillColor=#FAF7E8;strokeColor=#D6B656;size=18;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="985" width="410" height="125" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" value="NEW  -  Retention policy&#10;Release manifests and tags are retained indefinitely - they are the release history. Define retention for build artifacts separately." style="shape=note;whiteSpace=wrap;html=1;fillColor=#E9F3EC;strokeColor=#2E7D4F;size=18;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1000" y="1130" width="410" height="105" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ LANE 4 ═══ -->
+        <mxCell id="d1" value="Deploy Tool: release deploy&#10;&#10;release deploy --release 2026.09.1&#10;               --site pinetown-prod" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="200" width="410" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="d2" value="Load immutable release&#10;&#10;Read manifest from default branch or immutable Git tag.&#10;Do NOT resolve app release tags again." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="315" width="410" height="105" as="geometry" />
+        </mxCell>
+        <mxCell id="d3" value="CHANGED  -  Preconditions&#10;&#10;Release state is &quot;approved&quot;?&#10;Site is in an authorised rollout wave?&#10;One site per invocation  -  no fan-out" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="440" width="410" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="d4" value="Checkout target site branch&#10;prod-pinetown&#10;One branch represents desired state for one site" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="570" width="410" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="d5" value="Prepare all branch changes in memory&#10;&#10;· Update each app values.yaml image tag and digest&#10;· Add appVersion and full Git SHA metadata&#10;· Write site-level release-info.yaml&#10;· Update Helm values for site and product release&#10;· Render and validate all manifests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="685" width="410" height="155" as="geometry" />
+        </mxCell>
+        <mxCell id="d6" value="NEW  -  Deployment preview&#10;&#10;Show the operator the rendered diff before anything is committed: which images change, from which version to which, and what the site moves from and to." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E9F3EC;strokeColor=#2E7D4F;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="860" width="410" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="d7" value="CHANGED  -  One atomic deployed-state commit&#10;&#10;Deploy Converto 2026.09.1 to Pinetown&#10;All application values and metadata pushed together.&#10;Site branches are PROTECTED  -  Deploy Tool identity only, no direct or force push." style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=15;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="1010" width="410" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="d8" value="Rollback / redeploy&#10;Select an earlier immutable product release and run the same deployment operation for the target branch. Rollback is a normal deployment, not a special path." style="shape=note;whiteSpace=wrap;html=1;fillColor=#FAF7E8;strokeColor=#D6B656;size=18;fontSize=11;align=left;spacingLeft=8;" vertex="1" parent="1">
+          <mxGeometry x="1470" y="1190" width="410" height="125" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ LANE 5 ═══ -->
+        <mxCell id="e1" value="ArgoCD Application&#10;targetRevision: prod-pinetown&#10;Labels: product, site, cluster, release&#10;Polls Git and detects one atomic commit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="200" width="410" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="ArgoCD reconciliation&#10;Renders Helm values and applies desired resources.&#10;ArgoCD remains the only deployment actor with cluster credentials." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="335" width="410" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="Tanzu Kubernetes cluster:  pinetown-prod" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1B5E3F;strokeColor=#1B5E3F;fontSize=12;fontStyle=1;fontColor=#FFFFFF;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="455" width="410" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="CHANGED  -  ConfigMap: converto-release-info&#10;AUTHORITATIVE runtime record&#10;product-release · site · cluster&#10;release manifest reference · deployed-state commit" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="530" width="410" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Application workloads&#10;Labels: app name + app version, product release + site&#10;Annotations: Git SHA + image tag / digest&#10;Derived from the ConfigMap, not a second source" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="665" width="410" height="115" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="Release metadata exporter&#10;Reads the ConfigMap and workload labels.&#10;Exposes current desired / running release metadata on /metrics." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="800" width="410" height="100" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" value="Prometheus&#10;Scrapes ArgoCD metrics and the release metadata exporter.&#10;Stores current operational state." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#9AA5B1;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="920" width="410" height="95" as="geometry" />
+        </mxCell>
+        <mxCell id="e8" value="CHANGED  -  Grafana release dashboard&#10;· Product release per site  -  fleet view across all sites&#10;· App versions and images per site&#10;· Desired vs running release&#10;· ArgoCD sync and health&#10;· Rollout consistency and wave progress" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="1035" width="410" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="e9" value="NEW  -  Convergence alerting&#10;Alert when a site does not reach its desired release within a threshold, or when ArgoCD reports sync failure or drift. Divergence is escalated, not only displayed." style="rounded=1;whiteSpace=wrap;html=1;fillColor=#E9F3EC;strokeColor=#2E7D4F;strokeWidth=2;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="1940" y="1195" width="410" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ EDGES ═══ -->
+        <mxCell id="ed1" value="scenario app list" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="a1" target="b1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed2" value="release + version tags" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="a2" target="b2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed3" value="push image + digest" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="a3" target="a4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed4" value="verify image, digest and signature" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="a4" target="b3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed5" value="complete composition" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="b2" target="b3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed6" value="invalid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#B85450;" edge="1" parent="1" source="b3" target="b4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed7" value="valid" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#2E7D4F;" edge="1" parent="1" source="b4" target="b5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2E7D4F;" edge="1" parent="1" source="b5" target="b6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed9" value="one commit to default branch" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;strokeWidth=2;" edge="1" parent="1" source="b5" target="c2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed10" value="tag manifest commit" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="c2" target="c3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2E7D4F;strokeWidth=2;" edge="1" parent="1" source="c3" target="c4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed12" value="approve exact release" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="c4" target="c5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed13" value="read immutable manifest" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;dashed=1;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="c2" target="d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed14" value="approved release" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;strokeWidth=2;" edge="1" parent="1" source="c5" target="d3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A6470;" edge="1" parent="1" source="d1" target="d2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A6470;" edge="1" parent="1" source="d3" target="d4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A6470;" edge="1" parent="1" source="d4" target="d5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2E7D4F;strokeWidth=2;" edge="1" parent="1" source="d5" target="d6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed19" value="confirm, commit and push" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;strokeWidth=2;" edge="1" parent="1" source="d6" target="d7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed20" value="detect and sync" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;strokeWidth=2;" edge="1" parent="1" source="d7" target="e1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed21" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A6470;" edge="1" parent="1" source="e1" target="e2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed22" value="apply resources" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="e2" target="e3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#5A6470;" edge="1" parent="1" source="e4" target="e5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed24" value="release metadata" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="e5" target="e6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed25" value="scrape /metrics" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="e6" target="e7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed26" value="PromQL" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;fontSize=10;strokeColor=#5A6470;" edge="1" parent="1" source="e7" target="e8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ed27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=block;strokeColor=#2E7D4F;strokeWidth=2;" edge="1" parent="1" source="e8" target="e9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <!-- ═══ FOOTER ═══ -->
+        <mxCell id="principles" value="DESIGN PRINCIPLES   ·   Git is the authoritative release history   ·   Product releases are immutable and environment-independent   ·   Images are pinned by digest   ·   Site branches declare desired state and are protected   ·   All application updates are atomic per deployment   ·   One deployment targets one site   ·   ArgoCD is the only actor with cluster credentials   ·   Prometheus holds current operational state, not release history" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1F3A68;strokeColor=#1F3A68;fontSize=13;fontStyle=1;fontColor=#FFFFFF;align=left;spacingLeft=18;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="40" y="1410" width="2330" height="85" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
