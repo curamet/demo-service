@@ -1,0 +1,166 @@
+# Alert rules for the PR1+PR2 release.
+#
+# Micrometer's Prometheus registry appends _total to counters, so the counter
+# registered as "converto_debezium_engine_stops" is scraped as
+# converto_debezium_engine_stops_total. Gauges keep their name as-is.
+
+- uid: debezium_fatal
+  title: Debezium permanent failure
+  condition: A
+  noDataState: NoData
+  execErrState: Error
+  for: 1m
+  isPaused: false
+  notification_settings:
+    receiver: converto_alerts
+  annotations:
+    summary: "CDC stopped permanently and will not self-recover."
+    details: >-
+      Debezium in {{ $labels.namespace }} stopped with a non-recoverable failure
+      and the supervisor has given up. Restarting the pod will NOT fix it.
+      Check /actuator/health/readiness for failureType. Runbook RUN-CDC-001.
+  data:
+    - refId: A
+      datasourceUid: prometheus_ds
+      relativeTimeRange:
+        from: 300
+        to: 0
+      model:
+        datasource:
+          type: prometheus
+          uid: prometheus_ds
+        editorMode: code
+        expr: |
+          max by (namespace, application) (
+            converto_debezium_connector_fatal
+          ) == 1
+        instant: true
+        refId: A
+
+- uid: debezium_not_streaming
+  title: Debezium not streaming
+  condition: A
+  noDataState: NoData
+  execErrState: Error
+  for: 5m
+  isPaused: false
+  notification_settings:
+    receiver: converto_alerts
+  annotations:
+    summary: "CDC has not been streaming for 5 minutes."
+    details: >-
+      The Debezium connector task in {{ $labels.namespace }} is not running.
+      If converto_debezium_connector_fatal is also 1, this is permanent.
+  data:
+    - refId: A
+      datasourceUid: prometheus_ds
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        datasource:
+          type: prometheus
+          uid: prometheus_ds
+        editorMode: code
+        expr: |
+          min by (namespace, application) (
+            converto_debezium_connector_up
+          ) == 0
+        instant: true
+        refId: A
+
+- uid: debezium_restart_storm
+  title: Debezium restarting repeatedly
+  condition: A
+  noDataState: OK
+  execErrState: Error
+  for: 0m
+  isPaused: false
+  notification_settings:
+    receiver: converto_alerts
+  annotations:
+    summary: "Debezium engine restarted 3+ times in 15 minutes."
+    details: >-
+      Failure type {{ $labels.failure_type }}. The supervisor is retrying, so
+      this is not yet an outage, but a transient fault is recurring.
+  data:
+    - refId: A
+      datasourceUid: prometheus_ds
+      relativeTimeRange:
+        from: 900
+        to: 0
+      model:
+        datasource:
+          type: prometheus
+          uid: prometheus_ds
+        editorMode: code
+        expr: |
+          sum by (namespace, failure_type) (
+            increase(converto_debezium_engine_stops_total[15m])
+          ) >= 3
+        instant: true
+        refId: A
+
+# Backstop: fires even when the app cannot be scraped at all.
+- uid: legacy_message_service_not_ready
+  title: Legacy Message Service not ready
+  condition: A
+  noDataState: NoData
+  execErrState: Error
+  for: 5m
+  isPaused: false
+  notification_settings:
+    receiver: converto_alerts
+  annotations:
+    summary: "Pod has been NotReady for 5 minutes."
+    details: "Pod {{ $labels.pod }} in {{ $labels.namespace }} is NotReady."
+  data:
+    - refId: A
+      datasourceUid: prometheus_ds
+      relativeTimeRange:
+        from: 600
+        to: 0
+      model:
+        datasource:
+          type: prometheus
+          uid: prometheus_ds
+        editorMode: code
+        expr: |
+          sum by (namespace, pod) (
+            kube_pod_status_ready{condition="true", pod=~"legacy-message-service-.*"}
+          ) == 0
+        instant: true
+        refId: A
+
+# Covers the blind spot in the existing pod_restarts rule: at exponential
+# backoff a crashlooping pod settles near 2 restarts per 10m, so a `>= 2`
+# threshold flaps in and out of firing exactly when the fault becomes permanent.
+- uid: pod_crashlooping
+  title: Pod in CrashLoopBackOff
+  condition: A
+  noDataState: OK
+  execErrState: Error
+  for: 15m
+  isPaused: false
+  notification_settings:
+    receiver: converto_alerts
+  annotations:
+    summary: "Pod stuck in CrashLoopBackOff."
+    details: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has been in CrashLoopBackOff for 15 minutes."
+  data:
+    - refId: A
+      datasourceUid: prometheus_ds
+      relativeTimeRange:
+        from: 900
+        to: 0
+      model:
+        datasource:
+          type: prometheus
+          uid: prometheus_ds
+        editorMode: code
+        expr: |
+          sum by (namespace, pod) (
+            kube_pod_container_status_waiting_reason{reason="CrashLoopBackOff"}
+          ) > 0
+        instant: true
+        refId: A

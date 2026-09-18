@@ -1,0 +1,34 @@
+# PR1 — replaces the livenessProbe/readinessProbe block (deployment.yaml lines 39-54).
+#
+# Change summary:
+#   - startupProbe added: absorbs slow Oracle/LogMiner startup (5 min budget).
+#   - initialDelaySeconds removed from liveness and readiness: while a startupProbe
+#     is running, Kubernetes does not run the other two probes at all, so the
+#     300s delays are now dead config. Leaving them in would add 300s of blindness
+#     AFTER startup succeeds.
+#   - liveness now hits a group that contains only livenessState (see application.yaml).
+#   - readiness now carries the debezium indicator.
+
+          startupProbe:
+            httpGet:
+              path: "{{ .Values.ingress.path }}/actuator/health/liveness"
+              port: 8093
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 30        # 300s budget, same as the old initialDelay
+
+          livenessProbe:
+            httpGet:
+              path: "{{ .Values.ingress.path }}/actuator/health/liveness"
+              port: 8093
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: "{{ .Values.ingress.path }}/actuator/health/readiness"
+              port: 8093
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3

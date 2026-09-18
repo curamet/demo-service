@@ -1,0 +1,28 @@
+# PR1 — replaces the management.endpoint.health block in
+# legacy-message-service application.yaml.
+#
+# The bug: `liveness: include: debezium` REPLACES the default liveness group.
+# livenessState was not monitored at all, and the pod's entire liveness contract
+# was "did the CDC engine last report success". A permanent Oracle SCN failure
+# therefore became an infinite pod restart loop with no alert.
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus
+  endpoint:
+    health:
+      # See SECURITY note in README: `always` exposes Oracle error text and SCNs
+      # on /actuator/health to anything that can reach the port.
+      show-details: always
+      probes:
+        enabled: true
+      group:
+        liveness:
+          include: livenessState
+        readiness:
+          include: readinessState,db,rabbit,diskSpace,debezium
+  metrics:
+    tags:
+      application: ${spring.application.name}

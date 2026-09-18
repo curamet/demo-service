@@ -1,126 +1,98 @@
-# Demo Service 
+# Release: CDC failure handling (PR1 + PR2)
 
-## Description
-This project is a demo service built with TypeScript, intended to be deployed as a **Cloud Run** service. It utilizes various Google Cloud services such as Pub/Sub, Secret Manager, and Storage, and uses Terraform for resource management and deployment.<br>
-The project is designed to be straightforward, demonstrating how to deploy a service and manage infrastructure with Terraform, while also showcasing interactions with various Google Cloud services. <br> <br>The focus is on the ease of managing infrastructure with Terraform, illustrating how simple it is to:
+## What went wrong on 07-28
 
-- Migrate to new environments
-- Set up staging environments identical to production for testing
-- Scale resources based on demand
-- Maintain and update infrastructure with minimal downtime
-- Ensure consistency and reproducibility across different environments
+`liveness.include: debezium` **replaced** the default liveness group rather than
+adding to it. Two consequences:
 
+1. `livenessState` was not monitored anywhere — Spring's own liveness signal was
+   effectively disabled.
+2. The pod's entire liveness contract became "did the CDC engine last report
+   success."
 
-## Prerequisites
-- Node.js (>=18)
-- npm
-- terraform (=v1.5.7)
+When Oracle reported `offset scn 13136367402` was no longer in redo — a permanent
+condition — the health indicator latched DOWN, liveness failed, Kubernetes killed
+the pod, the engine restarted, hit the same SCN, and died again. Forever, silently.
 
-## Project Structure
-- **`src/`**: Source code for the cloud run service.
-- **`build/`**: Compiled JavaScript files.
-- **`terraform/`**: Terraform configuration files.<br>
+The engine code made this inevitable: `buildCompletionCallback` logged the error
+and returned. Nothing restarted the engine in-process, so liveness was acting as
+the supervisor the service never had.
 
+## Changes
 
-  Terraform is set up in this project to manage all the resources, as well as to build, push, and deploy the image to Cloud Run.
-  Once you complete the configuration described below in the **Deployment** section, running the Terraform commands will get the service and resources up and running.<br>
+| File | Change |
+|---|---|
+| `application.yaml` | liveness = `livenessState`; `debezium` moved to readiness |
+| `deployment.yaml` | `startupProbe` added; dead `initialDelaySeconds: 300` removed |
+| `DebeziumFailureType.java` | new — permanent vs recoverable classification |
+| `DebeziumFailureClassifier.java` | new — maps Throwable → type |
+| `DebeziumHealthIndicator.java` | failure type + recoverability in health details |
+| `DebeziumSourceEventListener.java` | supervisor loop replaces fire-and-forget executor |
+| Grafana | 5 rules (see `debezium-alerts.yaml`) |
 
+## Behaviour change
 
-**IMPORTANT NOTE:** When you are done, please run the following command to destroy all the created resources and avoid any extra charges:
-``` terraform destroy -var-file="environments/dev/terraform.tfvars" -no-color```
+| Scenario | Before | After |
+|---|---|---|
+| Transient Oracle blip | Pod killed, silent restart | In-process restart, backoff, `restart_storm` alert if it recurs |
+| Offset SCN expired | Infinite crashloop, no alert | Supervisor stops, pod NotReady, `debezium_fatal` pages in 1m |
+| Slow LogMiner start | 300s blind window | `startupProbe` covers it, then real probes take over |
 
+## Why `startupProbe` and not `initialDelaySeconds`
 
-## Terraform
+While a `startupProbe` is running, Kubernetes does not run liveness or readiness
+at all. Keeping `initialDelaySeconds: 300` would add a further 300s of blindness
+*after* startup already succeeded.
 
-All Terraform resources are named with a prefix defined in the **terraform.tfvars** file to avoid naming conflicts when multiple users try this service. As a first step, please change this prefix to something unique to you.
+## Rollout
 
-### Configuration
-The project uses Terraform for infrastructure management, with configuration files located in the terraform/environments directory. Since this project only has one environment, there is only the **dev** folder.<br>
+1. Deploy to the lower environment.
+2. Verify `/actuator/health/liveness` returns 200 with only `livenessState`,
+   and `/actuator/health/readiness` includes `debezium`.
+3. Confirm `converto_debezium_connector_up` is 1 in Prometheus.
+4. Fault-inject a transient failure — drop the Oracle listener for 30s. Expect:
+   pod stays Running, readiness flips, supervisor retries, recovers.
+5. Fault-inject a permanent failure — point the connector at a stale offset.
+   Expect: `converto_debezium_connector_fatal` = 1, no restart, `debezium_fatal`
+   fires, pod stays Running but NotReady.
+6. Import the alert rules.
 
-The configuration files for each environment include:
-#### terraform.tfvars file:
+Rollback is config-only for PR1; PR2 reverts cleanly since `EventHandler` is untouched.
 
-This file contains global variables used throughout the project, including the project ID, region, and other details about the service to be deployed.
+## Open decisions
 
+**1. `show-details: always`** exposes Oracle error text, SCN values and table names
+on `/actuator/health`. Check whether ingress routes `/actuator` on port 8093. If it
+does, either switch to `when-authorized` or move management to a separate,
+non-ingressed port. Probes are unaffected — they only read the status code.
 
-###### important variables in the terraform.tfvars file:
-- **version**: Changing the version in the **terraform.tfvars** file  informs Terraform that a new version of the Cloud Run service (located in the /src directory) should be deployed. <br>
-  **Note**: Only update the version number when changes are made in the **/src** directory, not for infrastructure-only changes.
-- **prefix**:  This is used to prefix all resources created by Terraform to avoid naming conflicts when multiple users try this service.
+**2. Root cause of the 07-28 SCN loss** is still unconfirmed. Three candidates,
+and the fix differs for each:
+   - pod down longer than archive log retention
+   - a long-running full snapshot held the offset back (the ORA-01555 problem the
+     requirements doc targets)
+   - RMAN deleted archive logs Debezium had not consumed
 
+   If it is the third, none of this release prevents a recurrence — that needs an
+   Oracle-side `ARCHIVELOG DELETION POLICY` change.
 
-#### backend.conf file:
-This file contains the configuration for the Terraform backend and is used to store the state file in a Google Cloud Storage bucket.
+**3. Classifier patterns are pinned to the current Debezium version.** Add
+`DebeziumFailureClassifierTest` with the exact 07-28 message before merge, so a
+future Debezium upgrade that rewords it fails CI rather than silently
+reclassifying a permanent failure as retryable.
 
-Since all resources are named with a prefix, conflicts are avoided. Changing the bucket configuration to work with your own state is optional.
+## Deferred to PR3
 
+Predictive SCN headroom: compare the committed offset SCN against
+`MIN(FIRST_CHANGE#)` from `V$ARCHIVED_LOG` for logs still on disk, alert below
+~25% headroom. This is the only change that prevents the incident rather than
+reporting it. Pair with `debezium_metrics_MilliSecondsBehindSource` as the
+leading indicator.
 
-### Deployment 
-After making the necessary changes, to deploy the service and infrastructure, follow these steps:
+## Not addressed (independent of this release)
 
-1. Change the **prefix** in the **terraform.tfvars** file to something unique to you. This is a one-time change when you first get started.
-2. If the service code in /src is changed, update the version number in both the **terraform.tfvars** file and **package.json** to reflect the new version. -- if not changed the run service will not be redeployed.
-
-3. Connect to the Google Cloud project by running the following commands -- 3 & 4 are optional if you have already authenticated:
-    ```sh
-     gcloud auth application-default login --project=curamet-onboarding
-     gcloud config set project curamet-onboarding
-     gcloud auth login
-    ```
-4. Authenticate with the artifact registry:
-    ```sh
-    gcloud auth configure-docker "europe-docker.pkg.dev"
-    ```
-   
-5. Initialize Terraform -- from this point on, navigate to the **terraform** directory: 
-    ```sh
-    terraform init --backend-config="environments/dev/backend.conf"
-    ```
-
-6. Plan the Terraform configuration to make sure all looks good:
-    ```sh
-   terraform plan -var-file="environments/dev/terraform.tfvars" -no-color
-    ```
-   
-7. Apply the Terraform configuration:
-    ```sh
-    terraform apply -var-file="environments/dev/terraform.tfvars" -no-color
-    ```
-
-
-
-## Service
-
-The source code for the service is located in **/src**, it has the following available endpoints:
-
-1. **POST**: `/push-trigger`
-    - **Description**: This endpoint is triggered by a Pub/Sub push subscription. It retrieves data from the Secret Manager and uploads a dummy file to a storage bucket, which in turn triggers the next endpoint via a storage object notification.
-    - **Method**: POST
-
-2. **POST**: `/object-notification`
-    - **Description**: This endpoint is triggered by a storage object notification when a file is uploaded to the bucket.
-    - **Method**: POST
-    - **Request Parameters**: the attributes that are sent to the endpoint by the storage notification are detailed here https://cloud.google.com/storage/docs/pubsub-notifications
-
-
-## Deployed Infrastructure / Resources
-This is a high level overview of the resources created by Terraform after a successful deployment:
-
-<br>
-<img src="demo-service.png">
-
-
-## Suggested Next Steps
-
-- [ ] Set up a CI/CD pipeline with Cloud Build.
-- [ ] Set up a CI/CD pipeline  with GitHub Actions.
-- [ ] Implement pull subscription.
-- [ ] Showcase a scenario where the push trigger fails 5 times and is sent to a dead-letter topic.
-- [ ] Improve the way versioning is managed (currently, the version has to be manually updated in the **terraform.tfvars** file).
-- [ ] Add lifecycle rules to the storage bucket.
-- [ ] Restrict the service account (demo service runner) to access only the specified secret rather than all secrets.
-- [ ] Create a Cloud Scheduler job with Terraform to trigger an existing or a new endpoint. 
-- [ ] Use an alternative way to retrieve the secret from Secret Manager (instead of using the Secret Manager client library).
-- [ ] Setup a vpc network for the cloud run service to improve security.
-- [ ] Enable Cloud Run invocations from only specific IP addresses.
-- [ ] Anything worth exploring or trying. 
+From the `EventHandler` review:
+- poison events are silently dropped and the offset advances — unbounded silent data loss
+- `getPrimaryKeyField`/`getPrimaryKeyValue` take field index 0 only, so composite PKs are truncated
+- `SecurityContextHolder` is set per event but never cleared on pooled handler threads
+- `valueNode.get("source").get("scn")` will NPE into the silent-drop path if absent
