@@ -1,0 +1,66 @@
+
+As part of Ooredoo's EventHandler enhancement, we need to evaluate the required Kafka sizing and very high-level component architecture.
+The deployment approach is confirmed: Kafka will run on Red Hat OpenShift.
+The objective is to support the additional event traffic while ensuring scalability, high availability, and future reuse by other systems.
+ 
+1. Workload and Traffic Analysis
+Based on Ooredoo's transaction reports shared on April 6, 2026, and the balance crediting projections shared on May 5, 2026, we have the following workload:
+ 
+Transaction Category
+Average Transactions/Day
+Estimated Monthly Volume
+Gold Account Lifecycle
+14,273
+428,202
+External Order Fulfillment
+27,793
+833,779
+Bill Payments
+1,732
+51,946
+Balance Crediting (including OTF crediting)
+145,675
+4,370,243
+Total
+189,472
+5,684,170
+ 
+2. Traffic Bursts and Peak Considerations
+The provided reports show significant traffic variations:
+Historical transactions (Gold, External Order Fulfillment, Bill Payments):
+Combined average: approximately 43,798 transactions/day.
+March 10 peak: 135,411 transactions (3.1 times the average).
+March 15: 112,017 transactions (2.6 times the average).
+The Gold Account Lifecycle category is the main contributor to these spikes.
+Balance crediting:
+Projected average: 145,675 events/day.
+April 20 billing-cycle projection: 1,025,976 events (approximately 7 times the average).
+For an illustrative coincident-peak scenario, combining the historical transaction peak with the projected crediting peak gives approximately 1.16 million events in a day. This is not an observed combined peak, but it is useful for capacity and stress-testing considerations.
+Please ensure that sizing accounts for these bursts, not just average daily traffic. Hourly distribution and peak message rates will still need validation.
+ 
+3. Required Technical Assessment
+A. Kafka Sizing on OpenShift
+Please evaluate and recommend:
+Kafka broker and controller architecture with high availability.
+Required CPU, RAM, persistent storage, and OpenShift resources for Production and UAT.
+Topic partitioning, replication, retention, and storage growth.
+Capacity for normal traffic, peak bursts, consumer backlog, and future growth.
+Infrastructure prerequisites, dependencies, and monitoring requirements.
+B. Very High-Level Component Design
+Please prepare a simple architecture diagram showing:
+Event publishing from the existing GOLD/OFM integration layer to Kafka.
+Kafka running on OpenShift.
+EventHandler consuming and processing Kafka events.
+Support for additional independent consumers, such as Advanced Credit.
+ 
+The design should consider event reusability so that future consumers can subscribe without significant changes to the event producers.
+ 
+4. Expected Deliverables
+We need the following for our initial assessment:
+Kafka sizing recommendation for Production and UAT, including OpenShift resource requirements.
+Very high-level architecture diagram showing the main components and integration flows.
+Key assumptions and dependencies, including any missing information required from Ooredoo to validate the sizing.
+High-level man day estimation: providing the efforts needed to handle the Kafka setup on OpenShift.
+ 
+Please consider that the final number of Kafka messages may differ from the transaction counts, particularly where a transaction generates multiple events or balance records.
+At this stage, we only need the initial sizing and component-level design, not a detailed implementation document.
