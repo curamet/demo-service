@@ -96,3 +96,24 @@ From the `EventHandler` review:
 - `getPrimaryKeyField`/`getPrimaryKeyValue` take field index 0 only, so composite PKs are truncated
 - `SecurityContextHolder` is set per event but never cleared on pooled handler threads
 - `valueNode.get("source").get("scn")` will NPE into the silent-drop path if absent
+
+
+Thanks Momcilo, very useful. We checked your 34 points against our risk register:
+
+11 are already covered (for example pipeline poisoning, runner compromise, credential theft, privileged containers, container escape and lateral movement).
+15 are partly covered. We will add the missing detail, such as pull-request abuse, cache poisoning, Kubernetes secrets and unauthorized deployments.
+4 are new risks we will add:
+mixing dev/test and release environments
+over-privileged identities
+kubectl exec and podman exec abuse
+log tampering and evidence destruction
+We will add your critical attack path to the diagram, with controls that break it at several points.
+We will add T1677 to the pipeline risks.
+Scope: the pipeline ships OCI artifacts only (container images and release deployment config). Firmware and OT process configuration are out of scope.
+
+Questions:
+
+Who owns the OT-side threat model (items 16, 18, 20, 21, and the historian feeds in item 26)?
+Can you share MITRE IDs for items 6, 7, 10 and 16–34? Our proposed mapping is ready for you to confirm.
+
+Version 3 will follow.
