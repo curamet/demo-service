@@ -117,3 +117,17 @@ Who owns the OT-side threat model (items 16, 18, 20, 21, and the historian feeds
 Can you share MITRE IDs for items 6, 7, 10 and 16–34? Our proposed mapping is ready for you to confirm.
 
 Version 3 will follow.
+
+---------------------
+
+Thanks Momcilo, clear and agreed:
+
+Item 7: stays with Trusted Registries. We reference their risk “Backdoored image pushed to OT production registry”.
+Items 16, 18, 20: out of scope (runtime security).
+Item 21: agreed. NetworkPolicy ships in our signed bundle, so it is in scope as a new risk. Firewalls, routes and DNS stay with the network team.
+Item 26: covered as CI/CD observability only (run history, logs, status checks, dashboards, deployment status). Historian and OT assets are excluded.
+Ownership: agreed. We model only what we implement and focus on how the pipeline’s own functions can be used against itself.
+Critical attack path: mapped hop by hop. The strongest break point is site-side enforcement (admission control and Podman agent policy), which the pipeline cannot change.
+Open: please confirm that items 11 (exec commands) and 15 (discovery) are runtime security.
+
+The updated threat model and risk assessment (v3) drafted and uploaded.
