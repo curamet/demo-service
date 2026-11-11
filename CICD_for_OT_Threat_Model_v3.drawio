@@ -1,0 +1,738 @@
+<mxfile host="app.diagrams.net" pages="2">
+  <diagram id="cicd-ot-tm-v4" name="CI/CD for OT – Threat Model v4">
+    <mxGraphModel dx="1378" dy="585" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="2900" pageHeight="3250" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="c2" parent="1" style="text;html=1;fontSize=16;align=left;" value="&lt;b&gt;CI/CD for OT – Threat Model v3 · Kubernetes and Podman runtime profiles · OT site approval · site registry owned by Trusted Registries&lt;/b&gt;" vertex="1">
+          <mxGeometry height="30" width="1300" x="1000" y="12" as="geometry" />
+        </mxCell>
+        <mxCell id="c3" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=6 4;strokeColor=#B85450;strokeWidth=2;verticalAlign=top;fontSize=9;fontStyle=1;" value="IT" vertex="1">
+          <mxGeometry height="900" width="700" x="200" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c4" parent="1" style="swimlane;startSize=16;html=1;fillColor=none;strokeColor=#4D4D4D;fontSize=9;" value="CI Pipeline (ephemeral, rootless build agents)" vertex="1">
+          <mxGeometry height="500" width="620" x="240" y="230" as="geometry" />
+        </mxCell>
+        <mxCell id="c5" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=6 4;strokeColor=#B85450;strokeWidth=2;verticalAlign=top;fontSize=9;" value="" vertex="1">
+          <mxGeometry height="516" width="636" x="232" y="222" as="geometry" />
+        </mxCell>
+        <mxCell id="c6" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=8;" value="Developer" vertex="1">
+          <mxGeometry height="55" width="30" x="60" y="105" as="geometry" />
+        </mxCell>
+        <mxCell id="c7" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=8;" value="Operations Team" vertex="1">
+          <mxGeometry height="55" width="30" x="60" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="c8" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=8;" value="Operations Team" vertex="1">
+          <mxGeometry height="55" width="30" x="60" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="c9" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=8;" value="Release Manager" vertex="1">
+          <mxGeometry height="55" width="30" x="470" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="c10" parent="1" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="Public package &amp;amp; base-image registries" vertex="1">
+          <mxGeometry height="70" width="140" x="740" y="985" as="geometry" />
+        </mxCell>
+        <mxCell id="c11" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Source Control" vertex="1">
+          <mxGeometry height="56" width="56" x="430" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c12" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="Artifact Proxy" vertex="1">
+          <mxGeometry height="56" width="56" x="730" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c13" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Build Tool" vertex="1">
+          <mxGeometry height="56" width="56" x="290" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c14" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Test Runner" vertex="1">
+          <mxGeometry height="56" width="56" x="470" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c15" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="SAST &amp;amp; SCA Scanner" vertex="1">
+          <mxGeometry height="56" width="56" x="660" y="280" as="geometry" />
+        </mxCell>
+        <mxCell id="c16" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Image Builder" vertex="1">
+          <mxGeometry height="56" width="56" x="660" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="c17" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="SBOM (from image)" vertex="1">
+          <mxGeometry height="56" width="56" x="470" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="c18" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Image Vulnerability Scan" vertex="1">
+          <mxGeometry height="56" width="56" x="290" y="440" as="geometry" />
+        </mxCell>
+        <mxCell id="c19" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Sign + Attest" vertex="1">
+          <mxGeometry height="56" width="56" x="290" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="c20" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Pipeline Templates" vertex="1">
+          <mxGeometry height="56" width="56" x="660" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="c21" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="Secret Vault" vertex="1">
+          <mxGeometry height="56" width="56" x="290" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="c22" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="SIEM (external)" vertex="1">
+          <mxGeometry height="56" width="56" x="480" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="c23" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="Image Registry" vertex="1">
+          <mxGeometry height="56" width="56" x="690" y="820" as="geometry" />
+        </mxCell>
+        <mxCell id="c24" edge="1" parent="1" source="c6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c11" value="Pushes Code (signed commits)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c25" edge="1" parent="1" source="c7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c20" value="Manages via central templates">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="140" y="467" />
+              <mxPoint x="140" y="700" />
+              <mxPoint x="688" y="700" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c26" edge="1" parent="1" source="c11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c13" value="">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="458" y="200" />
+              <mxPoint x="318" y="200" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c27" edge="1" parent="1" source="c13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c14" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c28" edge="1" parent="1" source="c14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c15" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c29" edge="1" parent="1" source="c15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c16" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c30" edge="1" parent="1" source="c16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c17" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c31" edge="1" parent="1" source="c17" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c18" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c32" edge="1" parent="1" source="c18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c19" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c33" edge="1" parent="1" source="c20" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;dashed=1;" target="c13" value="defines">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="760" y="628" />
+              <mxPoint x="760" y="250" />
+              <mxPoint x="318" y="250" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c34" edge="1" parent="1" source="c13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c12" value="Pull (pinned deps)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="250" y="308" />
+              <mxPoint x="250" y="90" />
+              <mxPoint x="758" y="90" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c35" edge="1" parent="1" source="c12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c10" value="Mirror (pull)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="880" y="128" />
+              <mxPoint x="880" y="1020" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c36" edge="1" parent="1" source="c19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c21" value="Pull secrets / KMS sign">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c37" edge="1" parent="1" source="c19" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c23" value="Publish digest + attestations">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="318" y="760" />
+              <mxPoint x="718" y="760" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c38" edge="1" parent="1" source="c8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c21" value="Rotates Secrets">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c39" edge="1" parent="1" source="c9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c23" value="Promotes signed digests IT → OT (2-person gate)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c40" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#4D4D4D;verticalAlign=top;fontSize=9;fontStyle=1;" value="Factory" vertex="1">
+          <mxGeometry height="1120" width="1310" x="980" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c41" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=6 4;strokeColor=#B85450;strokeWidth=2;verticalAlign=top;fontSize=9;fontStyle=1;" value="DMZ" vertex="1">
+          <mxGeometry height="200" width="230" x="1010" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="c42" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=6 4;strokeColor=#B85450;strokeWidth=2;verticalAlign=top;fontSize=9;fontStyle=1;" value="OTPM (OT trust zone)" vertex="1">
+          <mxGeometry height="1050" width="980" x="1270" y="100" as="geometry" />
+        </mxCell>
+        <mxCell id="c43" parent="1" style="swimlane;startSize=24;html=1;fillColor=#EEF3FB;strokeColor=#6C8EBF;fontSize=10;fontStyle=1;" value="Runtime profile A · Kubernetes (several apps, HA, site cluster)" vertex="1">
+          <mxGeometry height="270" width="900" x="1330" y="130" as="geometry" />
+        </mxCell>
+        <mxCell id="c44" parent="1" style="swimlane;startSize=22;html=1;fillColor=#FFF8E5;strokeColor=#D6B656;fontSize=10;fontStyle=1;" value="Shared site services (both runtimes)" vertex="1">
+          <mxGeometry height="200" width="900" x="1330" y="420" as="geometry" />
+        </mxCell>
+        <mxCell id="c45" parent="1" style="swimlane;startSize=24;html=1;fillColor=#F4EEF8;strokeColor=#9673A6;fontSize=10;fontStyle=1;" value="Runtime profile B · Podman (single edge/line host · systemd timer / fetchit · Quadlet)" vertex="1">
+          <mxGeometry height="300" width="900" x="1330" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c46" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=6 4;strokeColor=#B85450;strokeWidth=2;verticalAlign=top;fontSize=9;" value="OT cell 1 (PLC / HMI)&lt;br&gt;&lt;i&gt;out of scope: runtime security / OT owner&lt;/i&gt;" vertex="1">
+          <mxGeometry height="140" width="230" x="1370" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="c47" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=6 4;strokeColor=#B85450;strokeWidth=2;verticalAlign=top;fontSize=9;" value="OT cell 2 (PLC / HMI)&lt;br&gt;&lt;i&gt;out of scope: runtime security / OT owner&lt;/i&gt;" vertex="1">
+          <mxGeometry height="140" width="230" x="1640" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="c48" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=6 4;strokeColor=#B85450;strokeWidth=2;verticalAlign=top;fontSize=9;" value="OT cell 3 (PLC / HMI)&lt;br&gt;&lt;i&gt;out of scope: runtime security / OT owner&lt;/i&gt;" vertex="1">
+          <mxGeometry height="140" width="270" x="1910" y="970" as="geometry" />
+        </mxCell>
+        <mxCell id="c49" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;strokeColor=#888888;verticalAlign=top;align=left;spacingLeft=6;fontSize=9;fontStyle=2;" value="Site release services" vertex="1">
+          <mxGeometry height="155" width="700" x="1345" y="435" as="geometry" />
+        </mxCell>
+        <mxCell id="c50" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="Image Registry" vertex="1">
+          <mxGeometry height="64" width="64" x="1100" y="480" as="geometry" />
+        </mxCell>
+        <mxCell id="c51" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="Site OCI Registry · pending / approved (Trusted Registries)" vertex="1">
+          <mxGeometry height="64" width="64" x="1368" y="463" as="geometry" />
+        </mxCell>
+        <mxCell id="c52" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Runtime Verification Policy" vertex="1">
+          <mxGeometry height="64" width="64" x="1648" y="463" as="geometry" />
+        </mxCell>
+        <mxCell id="c53" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Site Approval Service (SSO)" vertex="1">
+          <mxGeometry height="64" width="64" x="1908" y="463" as="geometry" />
+        </mxCell>
+        <mxCell id="c54" parent="1" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;fontSize=8;" value="OT approver" vertex="1">
+          <mxGeometry height="55" width="30" x="2085" y="465" as="geometry" />
+        </mxCell>
+        <mxCell id="c55" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="SIEM (external)" vertex="1">
+          <mxGeometry height="64" width="64" x="2148" y="463" as="geometry" />
+        </mxCell>
+        <mxCell id="c56" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="OT SSO / IdP (external)" vertex="1">
+          <mxGeometry height="64" width="64" x="2148" y="548" as="geometry" />
+        </mxCell>
+        <mxCell id="c57" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Deployed Pod (K8s)" vertex="1">
+          <mxGeometry height="64" width="64" x="1368" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="c58" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Admission Control" vertex="1">
+          <mxGeometry height="64" width="64" x="1648" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="c59" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="GitOps Controller" vertex="1">
+          <mxGeometry height="64" width="64" x="1908" y="248" as="geometry" />
+        </mxCell>
+        <mxCell id="c60" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Podman Workloads" vertex="1">
+          <mxGeometry height="64" width="64" x="1368" y="698" as="geometry" />
+        </mxCell>
+        <mxCell id="c61" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Pull Policy policy.json" vertex="1">
+          <mxGeometry height="64" width="64" x="1648" y="698" as="geometry" />
+        </mxCell>
+        <mxCell id="c62" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Quadlet Units" vertex="1">
+          <mxGeometry height="64" width="64" x="1778" y="698" as="geometry" />
+        </mxCell>
+        <mxCell id="c63" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="Host Deploy Agent (custom)" vertex="1">
+          <mxGeometry height="64" width="64" x="1908" y="698" as="geometry" />
+        </mxCell>
+        <mxCell id="c64" edge="1" parent="1" source="c49" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="c50" value="Trusted Registries replication:&lt;br&gt;signed, scanned, site-scoped → pending">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c65" edge="1" parent="1" source="c50" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;dashed=1;dashPattern=8 4;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="c23" value="Pull approved digests">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="950" y="512" />
+              <mxPoint x="950" y="848" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c66" edge="1" parent="1" source="c54" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="c53" value="Review verified evidence&lt;br&gt;+ approve (one OT approver)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c67" edge="1" parent="1" source="c59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" target="c51" value="Track approved repo · verify site approval key">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1940" y="410" />
+              <mxPoint x="1416" y="410" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c68" edge="1" parent="1" source="c59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="c58" value="Apply manifests">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c69" edge="1" parent="1" source="c58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="c57" value="Admit if verified">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c70" edge="1" parent="1" source="c58" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="c52" value="Load trust policy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c71" edge="1" parent="1" source="c57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="c51" value="Image pull">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c72" edge="1" parent="1" source="c63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.75;entryY=1;entryDx=0;entryDy=0;" target="c51" value="Track approved repo · verify site approval key">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1940" y="630" />
+              <mxPoint x="1416" y="630" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c73" edge="1" parent="1" source="c53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.25;entryY=0;entryDx=0;entryDy=0;" target="c51" value="Sign site approval + publish by digest to approved/&amp;lt;site&amp;gt;">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1940" y="448" />
+              <mxPoint x="1384" y="448" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c74" edge="1" parent="1" source="c53" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;dashed=1;exitX=1;exitY=0.75;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="c56" value="SSO + MFA step-up">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1990" y="580" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c75" edge="1" parent="1" source="c63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="c62" value="Apply">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c76" edge="1" parent="1" source="c62" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="c61" value="Start (pull)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c77" edge="1" parent="1" source="c61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" target="c60" value="Run if signed">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c78" edge="1" parent="1" source="c61" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="c52" value="Load trust policy">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c79" edge="1" parent="1" source="c60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="c51" value="Image pull">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c80" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;whiteSpace=wrap;" value="&lt;i&gt;pending/&amp;lt;site&amp;gt; ← replication only · approved/&amp;lt;site&amp;gt; ← Site Approval Service only · immutable, forward-only versions · verification policy via configuration management&lt;/i&gt;" vertex="1">
+          <mxGeometry height="24" width="700" x="1345" y="594" as="geometry" />
+        </mxCell>
+        <mxCell id="c81" edge="1" parent="1" source="c59" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;dashed=1;strokeColor=#999999;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" target="c55" value="Audit events (SIEM out of scope)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c82" edge="1" parent="1" source="c63" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;dashed=1;strokeColor=#999999;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" target="c55" value="Audit events (SIEM out of scope)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c83" edge="1" parent="1" source="c57" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="c46" value="Egress allow-list&lt;br&gt;(OPC UA)">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1300" y="280" />
+              <mxPoint x="1300" y="1040" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c84" edge="1" parent="1" source="c60" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.13;entryY=0;entryDx=0;entryDy=0;" target="c46" value="Egress allow-list">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c85" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="80" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="c86" edge="1" parent="1" source="c85" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c11" value="AV01 · S T R">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c87" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T03" vertex="1">
+          <mxGeometry height="36" width="36" x="250" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="c88" edge="1" parent="1" source="c87" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c11" value="AV02 · T">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c89" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T03" vertex="1">
+          <mxGeometry height="36" width="36" x="590" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="c90" edge="1" parent="1" source="c89" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c11" value="AV17 · I">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c91" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="150" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="c92" edge="1" parent="1" source="c91" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c13" value="AV14 · D">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c93" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="110" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="c94" edge="1" parent="1" source="c93" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c18" value="AV03 · T R">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c95" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="110" y="890" as="geometry" />
+        </mxCell>
+        <mxCell id="c96" edge="1" parent="1" source="c95" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c21" value="AV04 · I E S">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c97" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T02" vertex="1">
+          <mxGeometry height="36" width="36" x="100" y="640" as="geometry" />
+        </mxCell>
+        <mxCell id="c98" edge="1" parent="1" source="c97" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;exitX=1;exitY=0.5;exitDx=0;exitDy=0;" target="c20" value="AV10 · T E">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="600" y="655" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="c99" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="900" y="350" as="geometry" />
+        </mxCell>
+        <mxCell id="c100" edge="1" parent="1" source="c99" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c16" value="AV11 · T E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c101" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T04" vertex="1">
+          <mxGeometry height="36" width="36" x="860" y="180" as="geometry" />
+        </mxCell>
+        <mxCell id="c102" edge="1" parent="1" source="c101" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c12" value="AV09 · T">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c103" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T02" vertex="1">
+          <mxGeometry height="36" width="36" x="340" y="1040" as="geometry" />
+        </mxCell>
+        <mxCell id="c104" edge="1" parent="1" source="c103" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c9" value="AV12 · S T R">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c105" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T02" vertex="1">
+          <mxGeometry height="36" width="36" x="230" y="960" as="geometry" />
+        </mxCell>
+        <mxCell id="c106" edge="1" parent="1" source="c105" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c21" value="AV15 · T R E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c107" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="560" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="c108" edge="1" parent="1" source="c107" style="html=1;endArrow=classic;strokeColor=#999999;fontColor=#999999;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;dashed=1;" target="c22" value="AV16 · out of scope (SIEM)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c109" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="800" y="905" as="geometry" />
+        </mxCell>
+        <mxCell id="c110" edge="1" parent="1" source="c109" style="html=1;endArrow=classic;strokeColor=#999999;fontColor=#999999;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;dashed=1;" target="c23" value="AV05 · out of scope&lt;br&gt;(Trusted Registries TM)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c111" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1170" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="c112" edge="1" parent="1" source="c111" style="html=1;endArrow=classic;strokeColor=#999999;fontColor=#999999;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;dashed=1;" target="c50" value="AV06 · out of scope">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c113" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1470" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="c114" edge="1" parent="1" source="c113" style="html=1;endArrow=classic;strokeColor=#999999;fontColor=#999999;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;dashed=1;" target="c51" value="AV07 · out of scope (TR)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c115" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1750" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="c116" edge="1" parent="1" source="c115" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c52" value="AV26 · T D">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c117" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="2000" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="c118" edge="1" parent="1" source="c117" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c53" value="AV21 · S T E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c119" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1872" y="545" as="geometry" />
+        </mxCell>
+        <mxCell id="c120" edge="1" parent="1" source="c119" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c53" value="AV34 · S T">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c121" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="2236" y="600" as="geometry" />
+        </mxCell>
+        <mxCell id="c122" edge="1" parent="1" source="c121" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c56" value="AV35 · D">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c123" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T02" vertex="1">
+          <mxGeometry height="36" width="36" x="1990" y="436" as="geometry" />
+        </mxCell>
+        <mxCell id="c124" edge="1" parent="1" source="c123" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c53" value="AV29 · T R">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c125" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1335" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="c126" edge="1" parent="1" source="c125" style="html=1;endArrow=classic;strokeColor=#999999;fontColor=#999999;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;dashed=1;" target="c51" value="AV28 · out of scope (TR)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c127" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1382" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="c128" edge="1" parent="1" source="c127" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c57" value="AV20 · E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c129" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T02" vertex="1">
+          <mxGeometry height="36" width="36" x="1662" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="c130" edge="1" parent="1" source="c129" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c58" value="AV19 · T E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c131" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1922" y="165" as="geometry" />
+        </mxCell>
+        <mxCell id="c132" edge="1" parent="1" source="c131" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c59" value="AV08 · T E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c133" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1480" y="335" as="geometry" />
+        </mxCell>
+        <mxCell id="c134" edge="1" parent="1" source="c133" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c57" value="AV13 · AV18&lt;br&gt;E I">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c135" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1470" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="c136" edge="1" parent="1" source="c135" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c60" value="AV25 · E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c137" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1560" y="865" as="geometry" />
+        </mxCell>
+        <mxCell id="c138" edge="1" parent="1" source="c137" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c60" value="AV13 · AV18 · E I">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c139" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T02" vertex="1">
+          <mxGeometry height="36" width="36" x="1662" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="c140" edge="1" parent="1" source="c139" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c61" value="AV24 · T S">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c141" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T04" vertex="1">
+          <mxGeometry height="36" width="36" x="1792" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="c142" edge="1" parent="1" source="c141" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c62" value="AV23 · T">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c143" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1922" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="c144" edge="1" parent="1" source="c143" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c63" value="AV22 · T E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c145" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T03" vertex="1">
+          <mxGeometry height="36" width="36" x="2040" y="805" as="geometry" />
+        </mxCell>
+        <mxCell id="c146" edge="1" parent="1" source="c145" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c63" value="AV27 · D">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c147" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="360" y="345" as="geometry" />
+        </mxCell>
+        <mxCell id="c148" edge="1" parent="1" source="c147" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c13" value="AV30 · T E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c149" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="1982" y="332" as="geometry" />
+        </mxCell>
+        <mxCell id="c150" edge="1" parent="1" source="c149" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c59" value="AV31 · E S">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c151" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T02" vertex="1">
+          <mxGeometry height="36" width="36" x="1335" y="332" as="geometry" />
+        </mxCell>
+        <mxCell id="c152" edge="1" parent="1" source="c151" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c57" value="AV32 · T E">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c153" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="2010" y="190" as="geometry" />
+        </mxCell>
+        <mxCell id="c154" edge="1" parent="1" source="c153" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c59" value="AV33 · T R">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c155" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="150" y="250" as="geometry" />
+        </mxCell>
+        <mxCell id="c156" edge="1" parent="1" source="c155" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c13" value="AV33 · T R (CI run history, status)">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c157" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="2000" y="668" as="geometry" />
+        </mxCell>
+        <mxCell id="c158" edge="1" parent="1" source="c157" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c63" value="AV33 · T R">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c159" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry height="26" width="26" x="706" y="588" as="geometry" />
+        </mxCell>
+        <mxCell id="c160" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" value="2" vertex="1">
+          <mxGeometry height="26" width="26" x="706" y="428" as="geometry" />
+        </mxCell>
+        <mxCell id="c161" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" value="3" vertex="1">
+          <mxGeometry height="26" width="26" x="336" y="808" as="geometry" />
+        </mxCell>
+        <mxCell id="c162" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" value="4" vertex="1">
+          <mxGeometry height="26" width="26" x="336" y="588" as="geometry" />
+        </mxCell>
+        <mxCell id="c163" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" value="5" vertex="1">
+          <mxGeometry height="26" width="26" x="1700" y="236" as="geometry" />
+        </mxCell>
+        <mxCell id="c164" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" value="6" vertex="1">
+          <mxGeometry height="26" width="26" x="1420" y="236" as="geometry" />
+        </mxCell>
+        <mxCell id="c165" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" value="7" vertex="1">
+          <mxGeometry height="26" width="26" x="1565" y="1075" as="geometry" />
+        </mxCell>
+        <mxCell id="c166" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" value="8" vertex="1">
+          <mxGeometry height="26" width="26" x="2145" y="1075" as="geometry" />
+        </mxCell>
+        <mxCell id="c167" parent="1" style="rounded=1;arcSize=6;whiteSpace=wrap;html=1;fillColor=#F5F5F0;strokeColor=none;" value="" vertex="1">
+          <mxGeometry height="1000" width="480" x="2340" y="40" as="geometry" />
+        </mxCell>
+        <mxCell id="c168" parent="1" style="text;html=1;whiteSpace=wrap;align=left;verticalAlign=top;fontSize=12;" value="&lt;i&gt;&lt;u&gt;&lt;b&gt;LEGEND&lt;/b&gt;&lt;/u&gt;&lt;br&gt;Pick the components from here and below next to the tables. Feel free to add other components and explanation here.&lt;/i&gt;" vertex="1">
+          <mxGeometry height="80" width="420" x="2370" y="60" as="geometry" />
+        </mxCell>
+        <mxCell id="c169" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFFFFF;strokeColor=#666666;fontSize=8;" value="" vertex="1">
+          <mxGeometry height="34" width="34" x="2390" y="170" as="geometry" />
+        </mxCell>
+        <mxCell id="c170" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Component &lt;u&gt;not&lt;/u&gt; in scope of the team (software asset)" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="166" as="geometry" />
+        </mxCell>
+        <mxCell id="c171" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#FFC000;gradientColor=#E8A000;strokeColor=#B07800;fontSize=8;fontStyle=1;" value="" vertex="1">
+          <mxGeometry height="34" width="34" x="2390" y="240" as="geometry" />
+        </mxCell>
+        <mxCell id="c172" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Component in scope of the team (software asset)" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="236" as="geometry" />
+        </mxCell>
+        <mxCell id="c173" parent="1" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;dashed=1;dashPattern=6 4;strokeColor=#B85450;strokeWidth=2;verticalAlign=top;fontSize=9;" value="" vertex="1">
+          <mxGeometry height="34" width="34" x="2390" y="310" as="geometry" />
+        </mxCell>
+        <mxCell id="c174" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Trust Boundary" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="306" as="geometry" />
+        </mxCell>
+        <mxCell id="c175" parent="1" style="rounded=0;html=1;fillColor=none;dashed=1;strokeColor=#999999;" value="" vertex="1">
+          <mxGeometry height="34" width="34" x="2390" y="380" as="geometry" />
+        </mxCell>
+        <mxCell id="c176" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Component &lt;u&gt;not&lt;/u&gt; in scope of the team" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="376" as="geometry" />
+        </mxCell>
+        <mxCell id="c177" parent="1" style="rounded=0;html=1;fillColor=none;dashed=1;strokeColor=#666666;" value="" vertex="1">
+          <mxGeometry height="34" width="34" x="2390" y="450" as="geometry" />
+        </mxCell>
+        <mxCell id="c178" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Component in scope of the team" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="446" as="geometry" />
+        </mxCell>
+        <mxCell id="c179" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="2380" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="c180" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="2440" y="535" as="geometry" />
+        </mxCell>
+        <mxCell id="c181" edge="1" parent="1" source="c179" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;endArrow=classic;strokeColor=#333333;fontSize=8;labelBackgroundColor=#FFFFFF;" target="c180" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c182" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Network Connection Direction (who is establishing the connection)" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="516" as="geometry" />
+        </mxCell>
+        <mxCell id="c183" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="Txx" vertex="1">
+          <mxGeometry height="38" width="38" x="2385" y="588" as="geometry" />
+        </mxCell>
+        <mxCell id="c184" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Threat agent (Txx)" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="586" as="geometry" />
+        </mxCell>
+        <mxCell id="c185" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="2380" y="675" as="geometry" />
+        </mxCell>
+        <mxCell id="c186" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="2440" y="675" as="geometry" />
+        </mxCell>
+        <mxCell id="c187" edge="1" parent="1" source="c185" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c186" value="AVxx · STRIDE">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c188" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Attack vector with STRIDE letters, mapped to risk IDs" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="656" as="geometry" />
+        </mxCell>
+        <mxCell id="c189" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="2380" y="745" as="geometry" />
+        </mxCell>
+        <mxCell id="c190" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="2440" y="745" as="geometry" />
+        </mxCell>
+        <mxCell id="c191" edge="1" parent="1" source="c189" style="html=1;endArrow=classic;strokeColor=#999999;fontColor=#999999;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;dashed=1;" target="c190" value="">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c192" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Attack vector owned by another project&#39;s threat model" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="726" as="geometry" />
+        </mxCell>
+        <mxCell id="c193" parent="1" style="rounded=0;html=1;fillColor=#EEF3FB;strokeColor=#6C8EBF;" value="" vertex="1">
+          <mxGeometry height="34" width="50" x="2385" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="c194" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Runtime profile A · Kubernetes" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="796" as="geometry" />
+        </mxCell>
+        <mxCell id="c195" parent="1" style="rounded=0;html=1;fillColor=#F4EEF8;strokeColor=#9673A6;" value="" vertex="1">
+          <mxGeometry height="34" width="50" x="2385" y="870" as="geometry" />
+        </mxCell>
+        <mxCell id="c196" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Runtime profile B · Podman" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="866" as="geometry" />
+        </mxCell>
+        <mxCell id="c197" parent="1" style="ellipse;whiteSpace=wrap;html=1;fillColor=#7B1FA2;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=11;fontStyle=1;" value="1" vertex="1">
+          <mxGeometry height="30" width="30" x="2390" y="942" as="geometry" />
+        </mxCell>
+        <mxCell id="c198" parent="1" style="text;html=1;whiteSpace=wrap;align=center;fontSize=10;fontStyle=1;" value="Hop 1-8 of the FOTIS critical OT attack path (table below)" vertex="1">
+          <mxGeometry height="42" width="320" x="2470" y="936" as="geometry" />
+        </mxCell>
+        <mxCell id="c199" parent="1" style="text;html=1;align=left;verticalAlign=top;fontSize=10;dashed=1;strokeColor=#333333;" value="&lt;b&gt;&lt;i&gt;Icons&lt;/i&gt;&lt;/b&gt;" vertex="1">
+          <mxGeometry height="190" width="300" x="200" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="c200" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="220" y="1310" as="geometry" />
+        </mxCell>
+        <mxCell id="c201" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="" vertex="1">
+          <mxGeometry height="1" width="1" x="350" y="1310" as="geometry" />
+        </mxCell>
+        <mxCell id="c202" edge="1" parent="1" source="c200" style="html=1;endArrow=classic;strokeColor=#C0392B;fontColor=#C0392B;fontSize=9;fontStyle=1;labelBackgroundColor=#FFFFFF;" target="c201" value="AV01">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="c203" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="Attack Vector" vertex="1">
+          <mxGeometry height="14" width="130" x="220" y="1285" as="geometry" />
+        </mxCell>
+        <mxCell id="c204" parent="1" style="rounded=0;html=1;fillColor=#FFF2CC;strokeColor=#D6B656;fontSize=8;" value="DA01" vertex="1">
+          <mxGeometry height="16" width="40" x="410" y="1280" as="geometry" />
+        </mxCell>
+        <mxCell id="c205" parent="1" style="rounded=0;html=1;fillColor=#D5E8D4;strokeColor=#82B366;fontSize=8;" value="C01" vertex="1">
+          <mxGeometry height="16" width="40" x="410" y="1305" as="geometry" />
+        </mxCell>
+        <mxCell id="c206" parent="1" style="shape=mxgraph.basic.8_point_star;html=1;fillColor=#C0392B;strokeColor=#FFFFFF;fontColor=#FFFFFF;fontSize=8;fontStyle=1;" value="T01" vertex="1">
+          <mxGeometry height="36" width="36" x="412" y="1335" as="geometry" />
+        </mxCell>
+        <mxCell id="c207" parent="1" style="text;html=1;fontSize=8;align=center;verticalAlign=middle;" value="Quick AV from STRIDE FW" vertex="1">
+          <mxGeometry height="14" width="130" x="220" y="1350" as="geometry" />
+        </mxCell>
+        <mxCell id="c208" parent="1" style="rounded=0;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=8;fontStyle=1;" value="S" vertex="1">
+          <mxGeometry height="18" width="18" x="220" y="1375" as="geometry" />
+        </mxCell>
+        <mxCell id="c209" parent="1" style="rounded=0;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=8;fontStyle=1;" value="T" vertex="1">
+          <mxGeometry height="18" width="18" x="242" y="1375" as="geometry" />
+        </mxCell>
+        <mxCell id="c210" parent="1" style="rounded=0;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=8;fontStyle=1;" value="R" vertex="1">
+          <mxGeometry height="18" width="18" x="264" y="1375" as="geometry" />
+        </mxCell>
+        <mxCell id="c211" parent="1" style="rounded=0;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=8;fontStyle=1;" value="I" vertex="1">
+          <mxGeometry height="18" width="18" x="286" y="1375" as="geometry" />
+        </mxCell>
+        <mxCell id="c212" parent="1" style="rounded=0;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=8;fontStyle=1;" value="D" vertex="1">
+          <mxGeometry height="18" width="18" x="308" y="1375" as="geometry" />
+        </mxCell>
+        <mxCell id="c213" parent="1" style="rounded=0;html=1;fillColor=#F8CECC;strokeColor=#B85450;fontSize=8;fontStyle=1;" value="E" vertex="1">
+          <mxGeometry height="18" width="18" x="330" y="1375" as="geometry" />
+        </mxCell>
+        <mxCell id="c214" parent="1" style="text;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;fillColor=#FFFFFF;strokeColor=#999999;shadow=1;" value="&lt;table style=&quot;width:100%;border-collapse:collapse;font-size:9px&quot;&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot; style=&quot;background:#FFF2CC;color:#000000;text-align:center;border:1px solid #999;padding:3px&quot;&gt;&lt;b&gt;Data Assets&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;background:#FFF2CC;color:#000000&quot;&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:40px&quot;&gt;&lt;b&gt;ID&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:250px&quot;&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Application source code and Dockerfiles&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;CI pipeline definitions and shared templates&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA03&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;SCM, CI, registry and deploy tokens&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA04&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Image signing keys (KMS/HSM)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA05&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Container images, referenced by digest&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA06&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;SBOMs, scan results, signed attestations&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA07&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Pipeline secrets in Secret Vault&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA08&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Site release bundles (K8s manifests / chart, Quadlet units) and site-approval attestations&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA13&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Site approval signing key (one per site)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA14&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Approver SSO identities and sessions&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA09&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;CI/CD, deployment and host audit logs&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA10&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Quadlet units and host config (/etc/containers)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA11&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;policy.json and registries.conf (Podman)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;DA12&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Runtime verification policy: trusted signers, deny-list&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="362" width="300" x="540" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="c215" parent="1" style="text;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;fillColor=#FFFFFF;strokeColor=#999999;shadow=1;" value="&lt;table style=&quot;width:100%;border-collapse:collapse;font-size:9px&quot;&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot; style=&quot;background:#D5E8D4;color:#000000;text-align:center;border:1px solid #999;padding:3px&quot;&gt;&lt;b&gt;Security Controls&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;background:#D5E8D4;color:#000000&quot;&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:40px&quot;&gt;&lt;b&gt;ID&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:350px&quot;&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Phishing-resistant MFA, no long-lived PATs&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Branch protection, signed commits, CODEOWNERS, 4-eyes&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C03&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Short-lived OIDC workload identity&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C04&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;SAST/SCA/image scan as blocking gates&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C05&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Dependency proxy, pinning by version/digest&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C06&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Ephemeral rootless build agents, no docker.sock&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C07&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Central versioned pipeline templates&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C08&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Dynamic least-privilege secrets (Vault)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C09&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Signing in KMS/HSM after all gates&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C10&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Signed SBOM, scan and provenance attestations bound to digest&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C11&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Two-person IT→OT promotion gate tied to change ID&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C12&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;K8s admission control: signature + provenance + Pod Security restricted, fail-closed&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C13&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;K8s namespace-scoped GitOps controller, deploy by digest&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C14&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Default-deny network policy / host firewall, egress allow-list to OT&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C15&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Audit events emitted and retained at source; exported to SIEM (external)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C16&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Continuous re-scan and release revocation&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C17&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;SoD, JIT admin access, access reviews&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C18&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;HA/backup for SCM/CI, break-glass path&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C19&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Controller and agent verify the bundle with this site&#39;s approval key only; forward-only versions; fail-closed&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C20&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Podman policy.json default-reject; signed images from site registry only; tested&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C21&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Rootless Podman, no podman.socket, no privileged containers&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C22&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;SELinux enforcing, per-container :Z labels&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C23&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Digest-only image refs, no AutoUpdate on tags&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C24&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Root-owned Quadlet dir, drift repair and file-integrity alerts&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C25&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Runtime verification policy via configuration management (not the registry): rotation, deny-list, staleness alerts&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C26&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Local rollback: previous release cached on node or host, standby host&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C27&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Runtime baseline conformance checks for both profiles&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C28&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Current + previous release cached on every node and host (registry HA: Trusted Registries)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C29&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Approved repo per site writable only by the Site Approval Service; read-only runtime accounts&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C30&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Dedicated release runners, no shared caches, environment-bound OIDC identities&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C31&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Least-privilege CI and deploy identities: no exec, no secret read, no token automount&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C32&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;NetworkPolicy / host firewall in signed bundle: default-deny, egress allow-list, policy-as-code tests, OT-security approval&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C33&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;CI run history and logs retained, status checks from trusted CI identity only; deployment status verified against approved repo&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C34&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Site Approval Service: SSO, phishing-resistant MFA, step-up on approve, non-exportable site key (HSM/TPM), built via golden path&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C35&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Approval view shows only evidence verified from signatures and attestations; auto-block wrong site scope&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C36&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Signed site-scope attestation from CI, enforced by Trusted Registries at promotion and replication&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C37&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;OT-resilient SSO (OT-resident IdP or federation), break-glass approver, pre-approved emergency rollback&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C38&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Podman agent enforces Quadlet policy before apply (no Privileged, host network, socket or broad mounts)&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="890" width="400" x="870" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="c216" parent="1" style="text;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;fillColor=#FFFFFF;strokeColor=#999999;shadow=1;" value="&lt;table style=&quot;width:100%;border-collapse:collapse;font-size:9px&quot;&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot; style=&quot;background:#F8CECC;color:#000000;text-align:center;border:1px solid #999;padding:3px&quot;&gt;&lt;b&gt;Threat Agents&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;background:#F8CECC;color:#000000&quot;&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:40px&quot;&gt;&lt;b&gt;ID&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:280px&quot;&gt;&lt;b&gt;Description&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Unauthorized user&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Authorized user (insider: operations, local admin, release manager)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T03&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Developer (unintentional)&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T04&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Compromised supplier / upstream package&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="142" width="330" x="1300" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="c217" parent="1" style="text;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;fillColor=#FFFFFF;strokeColor=#999999;shadow=1;" value="&lt;table style=&quot;width:100%;border-collapse:collapse;font-size:9px&quot;&gt;&lt;tr&gt;&lt;td colspan=&quot;2&quot; style=&quot;background:#4A7CC9;color:#FFFFFF;text-align:center;border:1px solid #999;padding:3px&quot;&gt;&lt;b&gt;Threat Model completion checklist&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;background:#4A7CC9;color:#FFFFFF&quot;&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:420px&quot;&gt;&lt;b&gt;Check&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:140px&quot;&gt;&lt;b&gt;Status (X if completed)&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Main components of System under Consideration (SuC)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Main actors&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Connection / Communication arrows for each component - and communication protocols&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Partial: add protocols&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Trust boundaries&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Relevant assets (Data, Software, ..) - assets that could be of interest of an attacker&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Relevant security controls (How are we protecting the assets)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Threat Agents (Who could attack our system, intentionally or unintentionally)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Attack Vectors (What kind of attacks?)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both runtime profiles modelled (Kubernetes, Podman)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Out-of-scope items recorded (registry, runtime security, OT assets, network infrastructure)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Ownership decisions recorded (site registry: Trusted Registries; SIEM external; one OT approver)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;FOTIS feedback traced (risk assessment: FOTIS Feedback Trace tab)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;X&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Traceability Matrix (not in this file)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;See risk assessment: Diagram reference&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="460" width="560" x="1660" y="1260" as="geometry" />
+        </mxCell>
+        <mxCell id="c218" parent="1" style="text;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;fillColor=#FFFFFF;strokeColor=#999999;shadow=1;" value="&lt;table style=&quot;width:100%;border-collapse:collapse;font-size:9px&quot;&gt;&lt;tr&gt;&lt;td colspan=&quot;7&quot; style=&quot;background:#E1D5E7;color:#000000;text-align:center;border:1px solid #999;padding:3px&quot;&gt;&lt;b&gt;Attack Vectors → Risk Assessment (CI/CD for OT, v4)&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;background:#E1D5E7;color:#000000&quot;&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:40px&quot;&gt;&lt;b&gt;AV&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:200px&quot;&gt;&lt;b&gt;Target&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:60px&quot;&gt;&lt;b&gt;Agent&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:60px&quot;&gt;&lt;b&gt;STRIDE&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:150px&quot;&gt;&lt;b&gt;Risk IDs&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:140px&quot;&gt;&lt;b&gt;Controls&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:80px&quot;&gt;&lt;b&gt;Runtime&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Source Control&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;S T R&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-001&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C01 C02 C15&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Source Control&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T03&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-002&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C02 C04&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV03&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Image Scanning / publish&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T R&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-010, R-011&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C04 C10&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV04&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Secret Vault&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;I E S&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-009, R-012&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C08 C09&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV05&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Image Registry (IT)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Trusted Registries TM&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Out of scope&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV06&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Image Registry (DMZ)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Trusted Registries TM&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Out of scope&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV07&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Site OCI Registry&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Trusted Registries (R-014 transferred)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Out of scope&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV08&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;GitOps Controller&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-015&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C13 C19&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Kubernetes&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV09&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Artifact Proxy / Build Tool&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T04&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-004, R-005&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C04 C05&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV10&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Pipeline Templates&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-007&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C02 C07 C03&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV11&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Build agents / Image Builder&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-008, R-034&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C06 C30&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV12&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Release Manager / promotion&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;S T R&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-013&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C01 C11&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV13&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Deployed workloads → OT cells&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;E I&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-018, R-036&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C14 C21 C22 C32&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV14&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Source Control / CI&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;D&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-003&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C18&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV15&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;CI admin / Secret Vault&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T R E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-020&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C17 C15&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV16&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;SIEM (external)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;SIEM owner&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Out of scope&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV17&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Source Control&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T03&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;I&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-006&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV18&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Deployed workloads&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;E I&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-017&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C16 C25&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV19&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Admission Control&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-031&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C12 C15 C27&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Kubernetes&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV20&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Kubernetes workload&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-016&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C12 C14&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Kubernetes&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV21&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Site Approval Service / approval&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01, T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;S T E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-021, R-038&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C19 C29 C34&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV22&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Host Deploy Agent (custom)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-022&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C19 C21 C24&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Podman&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV23&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Quadlet Units&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T02, T04&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-023, R-027&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C23 C24&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Podman&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV24&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Pull Policy (policy.json)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T S&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-024&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C20 C27&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Podman&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV25&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Podman Workloads&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01, T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-025, R-026&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C21 C22&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Podman&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV26&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Runtime Verification Policy&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T D&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-028&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C25 C16&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV27&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Host Deploy Agent&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T03&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;D&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-029&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C26 C19&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Podman&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV28&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Site OCI Registry&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;D&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Trusted Registries (R-032 transferred)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C28 (cache)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Out of scope&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV29&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Approved repository (replay / rollback)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T R&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-033&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C19 C29&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV30&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;CI build agents / shared caches&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-034&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C30 C06&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Common&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV31&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;GitOps controller / CI identities&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;E S&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-035&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C31 C03 C13&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV32&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;NetworkPolicy / host firewall in bundle&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T02&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T E&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-036&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C32 C14&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV33&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;CI run history and status checks; controller / agent status&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T R&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-037, R-019&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C33 C15&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV34&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Approval evidence view&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;S T&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-039&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C35 C10&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;AV35&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;OT SSO / IdP&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;T01&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;D&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-040&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C37 C26&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Governance gap (no AV)&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;–&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-030&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C27&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Both&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="846" width="1100" x="200" y="2320" as="geometry" />
+        </mxCell>
+        <mxCell id="c219" parent="1" style="text;html=1;whiteSpace=wrap;overflow=fill;verticalAlign=top;align=left;fillColor=#FFFFFF;strokeColor=#999999;shadow=1;" value="&lt;table style=&quot;width:100%;border-collapse:collapse;font-size:9px&quot;&gt;&lt;tr&gt;&lt;td colspan=&quot;5&quot; style=&quot;background:#F8CECC;color:#000000;text-align:center;border:1px solid #999;padding:3px&quot;&gt;&lt;b&gt;FOTIS critical OT attack path → break points (independent of a poisoned pipeline: hop 5, partly 3, 4 and 7)&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr style=&quot;background:#F8CECC;color:#000000&quot;&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:35px&quot;&gt;&lt;b&gt;Hop&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:140px&quot;&gt;&lt;b&gt;Attack step&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:150px&quot;&gt;&lt;b&gt;Risks&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:480px&quot;&gt;&lt;b&gt;Where we break it&lt;/b&gt;&lt;/td&gt;&lt;td style=&quot;border:1px solid #999;padding:2px;width:95px&quot;&gt;&lt;b&gt;Independent?&lt;/b&gt;&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;1&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Pipeline poisoning&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-007, R-002&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C02 C07: CODEOWNERS, central templates, PR builds without secrets&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;No&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;2&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Runner compromise&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-008, R-034&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C06 C30: ephemeral, dedicated release runners, no route to OT&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;No&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;3&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Credential theft&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-009, R-012, R-035, R-038&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C03 C08 C09 C31 C34: OIDC, dynamic secrets, KMS signing key, approver key behind SSO step-up&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Partly&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;4&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Malicious signed image&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-012, R-013, R-021, R-038, R-039&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C10 C11 C36 C19 C35: provenance, IT gate, Trusted Registries gate, OT approval with verified diff. Signatures alone do not stop a poisoned pipeline&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Partly&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;5&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Privileged container deployment&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-016, R-024, R-025, R-031, R-036&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C12 C20 C21 C38: admission and Podman agent Quadlet policy from configuration management, enforced even for signed, approved releases&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Yes&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;6&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Host escape&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-016, R-025, R-026&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C21 C22: rootless, SELinux, no sockets; exploit detection is runtime security&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Yes&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;7&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Lateral movement into OT&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-018, R-036, R-008&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C14 C32: admission default-deny check + OT firewall (network team); bundle NetworkPolicy alone is not independent&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Partly&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;8&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Process disruption&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;R-029, R-017, R-028&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;C26 C28 C16: rollback, cached release, deny-list; OT process impact out of scope&lt;/td&gt;&lt;td style=&quot;border:1px solid #bbb;padding:2px&quot;&gt;Recovery&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;" vertex="1">
+          <mxGeometry height="310" width="900" x="1330" y="2320" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="3qF5sjpuHWT0GHoJSlT7" name="Page-2">
+    <mxGraphModel dx="1653" dy="702" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
