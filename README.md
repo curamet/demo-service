@@ -218,3 +218,38 @@ I rebuilt the technical requirements from 30 to 24, aligned to the v4 threat ass
 - **Authentication-in-OT is out of scope in the BR page,** but TR 012 depends on it. List it as an external dependency of the Site Approval Service.
 - **The Trusted OT registry platform is out of scope,** which matches our design. List the SIEM next to it as an external dependency.
 - **Principle 7 lists "Git" for traceability.** In this design, the source commit and the signed attestations carry that traceability, so update the wording to match.
+
+-------------------------
+
+I'll build both deliverables in your FOTIS format: a draw.io threat model and a risk assessment workbook. First I'll reuse the generators from the CI/CD work.
+
+I've built the Message Federation IT-OT threat model (draw.io) and risk assessment (spreadsheet) in the same FOTIS format as the CI/CD ones. The workbook recalculates with 0 formula errors, and every attack vector on the diagram matches a risk in the sheet. I haven't opened the diagram in draw.io, only checked its layout with a rough plot.
+
+**What the draft missed**
+1. **The federation link is a direct path from IT into OT data.** Any IT service, broker account or insider that can publish on a federated exchange can change OT replica data. That makes R-001 the only Critical risk (score 20). The draft covers the link only with generic TLS (C06). The strongest fix sits in OT: consumers verify that the declared master sent and signed each event, and check its schema and version, before applying it. That holds even if IT is compromised.
+2. **Connection direction.** RabbitMQ federation is set up on the receiving broker, which connects out to the sending one. For OT→IT data, the default would therefore be IT connecting into OT. The model requires every cross-boundary connection to start from OT: federation for IT→OT, and a shovel running in OT for OT→IT. Only port 5671 (TLS) through the network team's firewall conduit (R-002).
+3. **Backend Control Service.** It has broad broker rights and a REST API with no UI. It could add a shovel that sends data to an external broker or remap masters (R-005). I recommend declaring the federation setup as code through GitOps.
+4. **Availability works against the vision.** An IT outage or a backlog can trigger broker disk or memory alarms, which block all publishers in OT (R-010). The replication gaps on the MF 040201 page also matter here: lost, duplicate and out-of-order events need idempotent, versioned consumers plus resync from the master (R-011).
+5. **Authentication still depends on IT.** If the OAuth provider stays in IT, an IT outage stops OT logins and API calls (R-008, draft R006).
+
+**Threat model diagram**
+- **Layout:** it keeps the draft's structure: IT zone, OT DMZ/OTPM zone, OT equipment zone, legend and the four tables. It adds a firewall conduit, an "OT-initiated, mTLS" federation link, the Backend Control Service on both sides, and the platform, Trusted Registry, jump station and OAuth provider as out-of-scope components.
+- **Attack vectors and tables:** 19 attack vectors (AV01–AV19), each mapped to risk IDs. The draft's data assets, controls and threat agents are kept and extended to 12 data assets, 20 controls and 6 threat agents.
+- **Extra tables:** a critical attack path table and the draft's two open questions, each with an answer.
+
+**Risk assessment**
+- **Totals:** 22 risks: 1 Critical, 14 High, 7 Medium. A Zone column marks each as IT → OT, Boundary, OT or Both.
+- **Same tabs as the CI/CD workbook:** Risk Summary, Risk Assessment, Mitigation Roadmap (4 phases covering every risk), Scoring Model (impact scale reworded for production impact) and Source Notes. Source Notes include the mapping from the draft's R004–R007 to the new IDs.
+- **Two new tabs:**
+  - Critical Attack Path: IT compromise → forged events → OT data, with the break points.
+  - Open Decisions: see below.
+
+**Decisions to take with FOTIS** (on the Open Decisions tab)
+- **Cluster placement:** the vision says OTPM, but the draft threat model places the cluster in the OT DMZ layer. Only the OTPM option needs a DMZ relay broker.
+- **Event authenticity:** end-to-end signing by the master service, or relying on the broker's user-id check only.
+- **Federation setup:** keep configuring through the Backend Control Service REST API, or declare it as code through GitOps.
+- **Authentication in OT:** where the OAuth provider runs, and how OT validates tokens when IT is down.
+- **Certificates:** which CA issues the federation and ingress certificates, and how IT and OT trust each other.
+- **RabbitMQ image source:** Bitnami changed its catalogue and licence terms in 2025, so confirm the image source.
+
+Draft risks R001–R003 weren't visible in the screenshots, so they aren't mapped. The scores, owners and MITRE IDs are proposals for review.
