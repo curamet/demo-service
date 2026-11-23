@@ -253,3 +253,37 @@ I've built the Message Federation IT-OT threat model (draw.io) and risk assessme
 - **RabbitMQ image source:** Bitnami changed its catalogue and licence terms in 2025, so confirm the image source.
 
 Draft risks R001–R003 weren't visible in the screenshots, so they aren't mapped. The scores, owners and MITRE IDs are proposals for review.
+
+--------------------
+
+I built v5 of the CI/CD risk assessment from v4, with Momcilo's 18 Nov reply applied. It recalculates with 0 formula errors.
+
+**Changes**
+- **R-037 (item 26):** now covers only manipulation of telemetry, status and alarms: spoofed status checks, alert rules and dashboards, and false "synced" or "approved" status.
+- **New R-041 (item 15):** container and cluster discovery through the CI and deploy tooling. It's Medium (9) and uses the existing attack vectors AV30 and AV31.
+- **New R-042 (item 34):** deletion or alteration of forensic evidence in the CI/CD path, as a separate High risk (12).
+- **New "Telemetry & Evidence Plan" tab:** this answers Momcilo's roadmap question directly. It has 12 actions for items 26 and 34, each with a phase, owner and a "done when" check. Phase 2 actions are meant to be in place before first go-live at a site. Registry metadata stays with Trusted Registries.
+- **Mitigation Roadmap:** the telemetry and evidence controls now start in Phase 2 and continue in Phases 3 and 4, instead of one generic Phase 4 line. R-041 is in Phase 2.
+- **FOTIS Feedback Trace:**
+  - Item 11 → out of scope (confirmed by FOTIS).
+  - Item 15 → R-041.
+  - Item 26 → R-037.
+  - Item 34 → R-042.
+  - Item 28 now also references R-042.
+  - No items are left "to confirm".
+- **Source Notes:** new "FOTIS feedback (v5)" entry; the v3 note now records his answers on items 11 and 15.
+
+The register now has 40 risks: 1 Critical, 28 High and 11 Medium. Two items are proposals for him to confirm: the 15-minute detection target for silenced log sources, and retention "aligned with Tetra Pak policy", since I don't know the actual policy period.
+
+The diagram needs no change, because the new risks reuse existing attack vectors. The draft reply from my previous message still fits; just point it to v5 and the new plan tab.
+
+-------------------------
+
+Thanks Momcilo, agreed:
+
+- **Item 11:** moved to runtime security.
+- **Item 15:** stays in the CI/CD model. Added as new risk R-041 (discovery through CI/CD and deploy tools).
+- **Items 26 and 34:** now two separate risks, R-037 (fake telemetry and alarms) and R-042 (deleted evidence). Each has a step-by-step plan in the new "Telemetry & Evidence Plan" tab, with owner and timing. The basics are in place before go-live.
+- **SIEM:** stays external. We send and protect the events; the SOC owns the SIEM.
+
+The updated risk assessment (v5) is shared here: CICD_for_OT_Risk_Assessment_v5.xlsx
