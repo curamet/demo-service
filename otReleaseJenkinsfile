@@ -1,0 +1,5 @@
+// All release, signing and security settings live in converto-shared-lib (ReleasePolicy).
+// The library version is pinned centrally in Jenkins (global library, override disabled).
+@Library('converto-shared-lib') _
+
+otReleasePipeline(serviceName: 'machine-asset-api-service')
