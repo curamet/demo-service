@@ -287,3 +287,8 @@ Thanks Momcilo, agreed:
 - **SIEM:** stays external. We send and protect the events; the SOC owns the SIEM.
 
 The updated risk assessment (v5) is shared here: CICD_for_OT_Risk_Assessment_v5.xlsx
+
+
+———————————————————————————-
+
+I kept the Converto point as "may need" because we haven't confirmed which Converto hosts on the OT side count as new installations. Add your name to the sign-off before sending.
