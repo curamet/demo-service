@@ -1,5 +1,15 @@
-// All release, signing and security settings live in converto-shared-lib (ReleasePolicy).
-// The library version is pinned centrally in Jenkins (global library, override disabled).
+// Converto OT release – machine-asset-api-service
+//
+// All stages, gates, signing and registry settings live in converto-shared-lib (vars/otReleasePipeline.groovy).
+// The library version is pinned centrally in Jenkins (global library, "Allow default version to be overridden" off),
+// so this file cannot select another library version or change security settings.
+//
+// Branch / PR build : build, test, SAST, SCA, image build and scan. Nothing is published.
+// Release           : push a GPG-signed annotated tag on master, e.g. ot-release-2026.11.1
+
 @Library('converto-shared-lib') _
 
-otReleasePipeline(serviceName: 'machine-asset-api-service')
+otReleasePipeline(
+    serviceName: 'machine-asset-api-service'
+    // dockerfile: 'Dockerfile'   // optional, relative path; the only other accepted setting
+)
