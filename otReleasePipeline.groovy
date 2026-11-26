@@ -15,10 +15,13 @@ import groovy.transform.Field
 @Field static final Map POLICY = [
     product           : 'converto',
 
-    // IT Harbor. Robot account limited to the project (push + accessories); tag immutability enabled.
+    // IT Harbor, two accounts on the same host, each kept in its own Docker config dir:
+    //   shared-services : pull only – builder image and base images  (HARBORHUB_SHARED_CREDENTIALS)
+    //   converto-harbor : push + accessories (signatures, attestations); tag immutability enabled
     registry          : 'hub.tetrapak.com',
     registryProject   : 'converto-harbor',
-    harborCredentials : 'OT_RELEASE_HARBOR_ROBOT',
+    harborCredentials : 'HARBORHUB_CREDENTIALS',          // converto-harbor push account
+    harborSharedCreds : 'HARBORHUB_SHARED_CREDENTIALS',   // shared-services pull account
 
     // Dedicated ephemeral agents. The sign agent has no build tools and never receives source code.
     buildAgent        : 'ot-release-build',
@@ -103,11 +106,18 @@ def call(Map config = [:]) {
                     script {
                         runGate('Initialize Release Context') {
                             String shortSha = env.GIT_COMMIT.take(12)
-                            env.RELEASE_TAG = env.TAG_NAME ?: "dev-${env.BUILD_NUMBER}-${shortSha}"
-                            env.SCAN_REF    = env.TAG_NAME ?: env.BRANCH_NAME
+                            // No tag (null/blank): default to a valid release tag, ot-release-<yyyy>.<MM>.<build>.
+                            // Used for labels and evidence only; publishing still requires a signed git tag.
+                            String gitTag = env.TAG_NAME?.trim()
+                            env.RELEASE_TAG = gitTag ?: defaultReleaseTag()
+                            if (!(env.RELEASE_TAG ==~ P.releaseTagPattern)) {
+                                error("Release tag '${env.RELEASE_TAG}' does not match ${P.releaseTagPattern}")
+                            }
+                            env.SCAN_REF    = gitTag ?: env.BRANCH_NAME
                             env.LOCAL_IMAGE = "ot-local/${svc.name}:${env.BUILD_NUMBER}-${shortSha}"
-                            if (env.TAG_NAME) {
-                                env.REMOTE_IMAGE_TAG = "${svc.repository}:${env.TAG_NAME}"
+                            echo "Release tag: ${env.RELEASE_TAG}${gitTag ? '' : ' (default, no git tag)'}"
+                            if (gitTag) {
+                                env.REMOTE_IMAGE_TAG = "${svc.repository}:${env.RELEASE_TAG}"
                                 echo "Release build: ${env.REMOTE_IMAGE_TAG}"
                             } else {
                                 echo 'Development build: publishing, signing and attestation stages are skipped.'
@@ -197,6 +207,8 @@ done
                 agent {
                     docker {
                         image P.mavenImage
+                        registryUrl "https://${P.registry}"
+                        registryCredentialsId P.harborSharedCreds
                         reuseNode true
                     }
                 }
@@ -248,6 +260,8 @@ test -s "$BUILD_DIR/package-checksums.sha256"
                 agent {
                     docker {
                         image P.mavenImage
+                        registryUrl "https://${P.registry}"
+                        registryCredentialsId P.harborSharedCreds
                         reuseNode true
                     }
                 }
@@ -292,8 +306,12 @@ test -s "$BUILD_DIR/package-checksums.sha256"
                 steps {
                     script {
                         runGate('Build Image') {
+                            // Base images come from shared-services: pull account only, own config dir.
+                            registryLogin(P.harborSharedCreds, 'docker', '.docker-pull')
                             sh '''#!/usr/bin/env bash
 set -Eeuo pipefail
+export DOCKER_CONFIG="$WORKSPACE/.docker-pull"
+trap 'rm -rf "$DOCKER_CONFIG"' EXIT
 docker build --pull --no-cache \
   --file "$DOCKERFILE" \
   --label "org.opencontainers.image.revision=$GIT_COMMIT" \
@@ -332,7 +350,7 @@ fi
                 when { buildingTag() }
                 steps {
                     script {
-                        runGate('Login to Harbor') { registryLogin(P, 'docker') }
+                        runGate('Login to Harbor') { registryLogin(P.harborCredentials, 'docker', '.docker') }
                     }
                 }
             }
@@ -408,7 +426,7 @@ test -s "$SBOM_DIR/sbom.cdx.json"
                             unstash 'attest-inputs'
                             script {
                                 runGate('Prepare Signer') {
-                                    registryLogin(P, 'cosign')
+                                    registryLogin(P.harborCredentials, 'cosign', '.docker')
                                     // Fail early if the private key does not match the pinned public key.
                                     withSigningKey(P) {
                                         sh '''#!/usr/bin/env bash
@@ -554,7 +572,7 @@ find "$EVIDENCE_DIR" -type f ! -name evidence-checksums.sha256 -print0 | sort -z
             }
             always {
                 sh '''#!/usr/bin/env bash
-rm -rf "$WORKSPACE/.docker"
+rm -rf "$WORKSPACE/.docker" "$WORKSPACE/.docker-pull"
 docker image rm "${LOCAL_IMAGE:-none}" "${REMOTE_IMAGE_TAG:-none}" >/dev/null 2>&1 || true
 '''
                 cleanWs(deleteDirs: true, disableDeferredWipeout: true, notFailBuild: true)
@@ -632,15 +650,16 @@ void assertPassed(String scanner, def result) {
     }
 }
 
-// Logs in to Harbor into a per-build config dir; the password is only in scope for the login itself.
-void registryLogin(Map P, String cli) {
-    withCredentials([usernamePassword(credentialsId: P.harborCredentials,
+// Logs in to Harbor into a per-build config dir (one dir per account, both accounts are on the same host).
+// The password is only in scope for the login itself.
+void registryLogin(String credentialsId, String cli, String configDir) {
+    withCredentials([usernamePassword(credentialsId: credentialsId,
                                       usernameVariable: 'HARBOR_USERNAME',
                                       passwordVariable: 'HARBOR_PASSWORD')]) {
-        withEnv(["REGISTRY_CLI=${cli}"]) {
+        withEnv(["REGISTRY_CLI=${cli}", "REGISTRY_CONFIG_DIR=${configDir}"]) {
             sh '''#!/usr/bin/env bash
 set -Eeuo pipefail
-export DOCKER_CONFIG="$WORKSPACE/.docker"
+export DOCKER_CONFIG="$WORKSPACE/$REGISTRY_CONFIG_DIR"
 mkdir -p "$DOCKER_CONFIG"
 printf '%s' "$HARBOR_PASSWORD" \
   | "$REGISTRY_CLI" login "$HARBOR_REGISTRY" --username "$HARBOR_USERNAME" --password-stdin >/dev/null
@@ -725,6 +744,10 @@ Map releaseManifest(Map P, Map svc) {
 
 void writeJson(String file, Map content) {
     writeFile file: file, text: JsonOutput.prettyPrint(JsonOutput.toJson(content)) + '\n'
+}
+
+String defaultReleaseTag() {
+    return "ot-release-${new Date().format('yyyy.MM', TimeZone.getTimeZone('UTC'))}.${env.BUILD_NUMBER}".toString()
 }
 
 String utcNow() {
