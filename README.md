@@ -291,4 +291,4 @@ The updated risk assessment (v5) is shared here: CICD_for_OT_Risk_Assessment_v5.
 
 ———————————————————————————-
 
-I kept the Converto point as "may need" because we haven't confirmed which Converto hosts on the OT side count as new installations. Add your name to the sign-off before sending.
+Hi Bjorn, no changes needed in the diagram itself. v5 only changed the risk register, based on FOTIS feedback. The only update is the attack-vector table: add the two new risks, R-041 (container/cluster discovery) to the deploy-tooling vectors and R-042 (evidence deletion) to the audit/evidence vectors (AV33, AV16).
